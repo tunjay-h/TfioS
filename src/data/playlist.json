@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "title": "TfioS — Little, Beautiful Collection",
+    "description": "A small constellation of songs that mean a lot.",
+    "bgTrack": {
+      "title": "Finding the Rose",
+      "artist": "Hans Zimmer & Richard Harvey",
+      "note": "From the soundtrack of \"The Little Prince\"",
+      "src": "/finding-the-rose.mp3",
+      "volume": 0.35
+    }
+  },
+  "tracks": [
+    {
+      "id": "kodaline-all-i-want",
+      "title": "All I Want",
+      "artist": "Kodaline",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=Kodaline+All+I+Want"
+    },
+    {
+      "id": "the-script-the-man-who-cant-be-moved",
+      "title": "The Man Who Can’t Be Moved",
+      "artist": "The Script",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=The+Script+The+Man+Who+Can%27t+Be+Moved"
+    },
+    {
+      "id": "onerepublic-lets-hurt-tonight",
+      "title": "Let’s Hurt Tonight",
+      "artist": "OneRepublic",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=OneRepublic+Let%27s+Hurt+Tonight"
+    },
+    {
+      "id": "onerepublic-come-home",
+      "title": "Come Home",
+      "artist": "OneRepublic",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=OneRepublic+Come+Home"
+    },
+    {
+      "id": "linkin-park-one-more-light",
+      "title": "One More Light",
+      "artist": "Linkin Park",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=Linkin+Park+One+More+Light"
+    },
+    {
+      "id": "song-of-the-sea",
+      "title": "Song of the Sea (From the film)",
+      "artist": "Bruno Coulais / Lisa Hannigan",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=Song+of+the+Sea+Lisa+Hannigan"
+    },
+    {
+      "id": "the-script-no-good-in-goodbye",
+      "title": "No Good in Goodbye",
+      "artist": "The Script",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=The+Script+No+Good+in+Goodbye"
+    },
+    {
+      "id": "yann-tiersen-amelie-comptine",
+      "title": "Comptine d’un autre été (Amélie)",
+      "artist": "Yann Tiersen",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=Yann+Tiersen+Comptine+d%27un+autre+ete"
+    },
+    {
+      "id": "snow-patrol-chasing-cars",
+      "title": "Chasing Cars",
+      "artist": "Snow Patrol",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=Snow+Patrol+Chasing+Cars"
+    },
+    {
+      "id": "sting-shape-of-my-heart",
+      "title": "Shape of My Heart",
+      "artist": "Sting",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=Sting+Shape+of+My+Heart"
+    },
+    {
+      "id": "coldplay-yellow",
+      "title": "Yellow",
+      "artist": "Coldplay",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=Coldplay+Yellow"
+    },
+    {
+      "id": "imagine-dragons-birds",
+      "title": "Birds",
+      "artist": "Imagine Dragons",
+      "embedUrl": null,
+      "openUrl": "https://www.youtube.com/results?search_query=Imagine+Dragons+Birds"
+    }
+  ]
+}
