@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tfios.example/sitemap.xml
+Sitemap: https://tfios.app/sitemap.xml
