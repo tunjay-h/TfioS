@@ -7,6 +7,7 @@ module.exports = {
         midnight: '#050A1F',
         starlight: '#9FC9FF',
         aurora: '#8B5CF6',
+        aurum: '#D7B866',
         nebula: '#FF80BF',
       },
       fontFamily: {
@@ -21,9 +22,19 @@ module.exports = {
           '0%, 100%': { transform: 'translateY(-1%)' },
           '50%': { transform: 'translateY(1%)' },
         },
+        'orbital-loop': {
+          '0%': { transform: 'rotate(0deg) translateX(85px) rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg) translateX(85px) rotate(-360deg)' },
+        },
+        'badge-glow': {
+          '0%, 100%': { boxShadow: '0 0 25px rgba(215, 184, 102, 0.35)' },
+          '50%': { boxShadow: '0 0 45px rgba(215, 184, 102, 0.55)' },
+        },
       },
       animation: {
         'float-slow': 'float-slow 12s ease-in-out infinite',
+        'orbital-loop': 'orbital-loop 18s linear infinite',
+        'badge-glow': 'badge-glow 6s ease-in-out infinite',
       },
     },
   },

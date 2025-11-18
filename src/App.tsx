@@ -1,26 +1,47 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import playlistData from './data/playlist.json';
-import { Playlist, Track } from './types';
+import moviesData from './data/movies.json';
+import quotesData from './data/quotes.json';
+import { Movie, Playlist, Quote, Track } from './types';
 import { useAmbientAudio } from './hooks/useAmbientAudio';
-import { StarField } from './components/StarField';
+import { GalaxyBackground } from './components/GalaxyBackground';
 import { Header } from './components/Header';
 import { DiscSlider } from './components/DiscSlider';
+import { MovieSlider } from './components/MovieSlider';
+import { MoviePanel } from './components/MoviePanel';
+import { QuotesCarousel } from './components/QuotesCarousel';
+import { StaggeredMenu } from './components/StaggeredMenu';
 import { PlayerPanel } from './components/PlayerPanel';
 import { Toast } from './components/Toast';
-import { getTrackIdFromUrl, updateTrackIdInUrl } from './lib/url';
+import { buildShareUrl, navigateToRoute, parseRouteFromLocation, type Route } from './lib/url';
 
-const data = playlistData as Playlist;
+const playlist = playlistData as Playlist;
+const moviesCollection = moviesData as Movie[];
+const quotesCollection = quotesData as Quote[];
 
 export default function App() {
-  const { meta, tracks } = data;
+  const { meta, tracks } = playlist;
+  const movies = moviesCollection;
+  const quotes = quotesCollection;
   const { status, muted, pause, play, toggleMute, manuallyUnblock } = useAmbientAudio(
     meta.bgTrack.src,
     meta.bgTrack.volume,
   );
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const [isMoviePanelOpen, setIsMoviePanelOpen] = useState(false);
+  const [forcedQuoteId, setForcedQuoteId] = useState<string | null>(null);
+  const [quoteAutoPaused, setQuoteAutoPaused] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const toastTimeout = useRef<number | null>(null);
+  const lastNonTrackRoute = useRef<Route>({ type: 'home' });
+
+  const rememberRoute = useCallback((route: Route) => {
+    if (route.type !== 'track') {
+      lastNonTrackRoute.current = route;
+    }
+  }, []);
 
   const showToast = useCallback((message: string) => {
     if (toastTimeout.current) {
@@ -46,14 +67,16 @@ export default function App() {
     } else if (status === 'error') {
       showToast('Ambient score failed to load.');
     }
-  }, [status, showToast]);
+  }, [showToast, status]);
 
   const selectTrack = useCallback(
     (track: Track) => {
       setSelectedTrack(track);
       setIsPanelOpen(true);
+      setIsMoviePanelOpen(false);
+      setSelectedMovie(null);
       pause();
-      updateTrackIdInUrl(track.id);
+      navigateToRoute({ type: 'track', id: track.id });
     },
     [pause],
   );
@@ -61,39 +84,117 @@ export default function App() {
   const closePanel = useCallback(() => {
     setIsPanelOpen(false);
     setSelectedTrack(null);
-    updateTrackIdInUrl(null);
+    const fallbackRoute = lastNonTrackRoute.current ?? { type: 'home' };
+    navigateToRoute(fallbackRoute);
     if (status !== 'blocked') {
-      play().catch(() => {
-        /* ignore */
-      });
+      play().catch(() => undefined);
     }
   }, [play, status]);
 
+  const handleMovieSelect = useCallback(
+    (movie: Movie) => {
+      setSelectedMovie(movie);
+      setIsMoviePanelOpen(true);
+      setIsPanelOpen(false);
+      setSelectedTrack(null);
+      if (status !== 'blocked') {
+        play().catch(() => undefined);
+      }
+      const route = { type: 'movie', id: movie.slug } as const;
+      rememberRoute(route);
+      navigateToRoute(route);
+    },
+    [play, rememberRoute, status],
+  );
+
+  const closeMoviePanel = useCallback(() => {
+    setIsMoviePanelOpen(false);
+    setSelectedMovie(null);
+    const route = { type: 'home' } as const;
+    rememberRoute(route);
+    navigateToRoute(route);
+  }, [rememberRoute]);
+
+  const handleQuoteChange = useCallback(
+    (quote: Quote, source: 'auto' | 'user') => {
+      if (source === 'user') {
+        setForcedQuoteId(null);
+        setQuoteAutoPaused(false);
+        const route = { type: 'quote', id: quote.id } as const;
+        rememberRoute(route);
+        navigateToRoute(route);
+      }
+    },
+    [rememberRoute],
+  );
+
+  const goHome = useCallback(() => {
+    setIsPanelOpen(false);
+    setSelectedTrack(null);
+    setIsMoviePanelOpen(false);
+    setSelectedMovie(null);
+    setForcedQuoteId(null);
+    setQuoteAutoPaused(false);
+    const route = { type: 'home' } as const;
+    rememberRoute(route);
+    navigateToRoute(route);
+    if (status !== 'blocked') {
+      play().catch(() => undefined);
+    }
+  }, [play, rememberRoute, status]);
+
   useEffect(() => {
-    const applyDeepLink = () => {
-      const trackId = getTrackIdFromUrl();
-      const track = tracks.find((item) => item.id === trackId) ?? null;
-      if (track) {
-        setSelectedTrack(track);
-        setIsPanelOpen(true);
-        pause();
+    const applyRoute = () => {
+      const route = parseRouteFromLocation();
+      rememberRoute(route);
+
+      if (route.type === 'track') {
+        const track = tracks.find((item) => item.id === route.id) ?? null;
+        if (track) {
+          setSelectedTrack(track);
+          setIsPanelOpen(true);
+          setIsMoviePanelOpen(false);
+          setSelectedMovie(null);
+          pause();
+        }
       } else {
-        setSelectedTrack(null);
         setIsPanelOpen(false);
+        setSelectedTrack(null);
+        if (status !== 'blocked') {
+          play().catch(() => undefined);
+        }
+      }
+
+      if (route.type === 'movie') {
+        const movie = movies.find((item) => item.slug === route.id) ?? null;
+        setSelectedMovie(movie);
+        setIsMoviePanelOpen(Boolean(movie));
+      } else if (route.type !== 'track') {
+        setIsMoviePanelOpen(false);
+        setSelectedMovie(null);
+      }
+
+      if (route.type === 'quote') {
+        setForcedQuoteId(route.id);
+        setQuoteAutoPaused(true);
+      } else if (route.type !== 'track') {
+        setForcedQuoteId(null);
+        setQuoteAutoPaused(false);
       }
     };
 
-    applyDeepLink();
-    window.addEventListener('popstate', applyDeepLink);
-    return () => window.removeEventListener('popstate', applyDeepLink);
-  }, [pause, tracks]);
+    applyRoute();
+    window.addEventListener('popstate', applyRoute);
+    return () => window.removeEventListener('popstate', applyRoute);
+  }, [movies, pause, play, rememberRoute, status, tracks]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && isPanelOpen) {
         setIsPanelOpen(false);
         setSelectedTrack(null);
-        updateTrackIdInUrl(null);
+        const fallbackRoute = lastNonTrackRoute.current ?? { type: 'home' };
+        navigateToRoute(fallbackRoute);
         if (status !== 'blocked') {
           play().catch(() => undefined);
         }
@@ -101,15 +202,11 @@ export default function App() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [play, status]);
+  }, [isPanelOpen, play, status]);
 
   const handleShare = useCallback(
     async (track: Track) => {
-      const shareUrl = (() => {
-        const url = new URL(window.location.href);
-        url.searchParams.set('t', track.id);
-        return url.toString();
-      })();
+      const shareUrl = buildShareUrl({ type: 'track', id: track.id });
 
       if (navigator.share) {
         try {
@@ -133,7 +230,7 @@ export default function App() {
           showToast('Link copied to clipboard.');
           return;
         } catch (error) {
-          // fall through
+          // ignore
         }
       }
 
@@ -146,8 +243,11 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-midnight">
-      <StarField />
-      <main className="relative z-10 mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-32 pt-4 sm:px-10">
+      <GalaxyBackground />
+      <main className="relative z-10 mx-auto flex max-w-7xl flex-col gap-12 px-4 pb-32 pt-6 sm:px-8 lg:px-10">
+        <div className="flex justify-end">
+          <StaggeredMenu onHome={goHome} />
+        </div>
         <Header
           status={status}
           muted={muted}
@@ -158,8 +258,20 @@ export default function App() {
           backgroundNote={meta.bgTrack.note}
         />
         <DiscSlider tracks={sortedTracks} activeTrackId={selectedTrack?.id ?? null} onSelect={selectTrack} />
+        <MovieSlider
+          movies={movies}
+          activeMovieSlug={selectedMovie?.slug ?? null}
+          onSelect={handleMovieSelect}
+        />
+        <QuotesCarousel
+          quotes={quotes}
+          controlledQuoteId={forcedQuoteId}
+          onQuoteChange={handleQuoteChange}
+          autoAdvancePaused={quoteAutoPaused}
+        />
       </main>
       <PlayerPanel track={selectedTrack} isOpen={isPanelOpen} onClose={closePanel} onShare={handleShare} />
+      <MoviePanel movie={selectedMovie} isOpen={isMoviePanelOpen} onClose={closeMoviePanel} />
       <Toast message={toast} />
     </div>
   );

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Track } from '../types';
 
 export type DiscSliderProps = {
@@ -28,21 +28,6 @@ export function DiscSlider({ tracks, activeTrackId, onSelect }: DiscSliderProps)
     [onSelect, tracks],
   );
 
-  const initials = useMemo(() => {
-    const computeInitials = (title: string) =>
-      title
-        .split(/\s+/)
-        .filter(Boolean)
-        .map((word) => word[0])
-        .join('')
-        .slice(0, 3)
-        .toUpperCase();
-    return tracks.reduce<Record<string, string>>((acc, track) => {
-      acc[track.id] = computeInitials(track.title);
-      return acc;
-    }, {});
-  }, [tracks]);
-
   return (
     <section aria-labelledby="tracks-heading" className="relative z-10">
       <div className="mb-4 flex items-center justify-between gap-4">
@@ -70,22 +55,29 @@ export function DiscSlider({ tracks, activeTrackId, onSelect }: DiscSliderProps)
                 data-track-index={index}
                 onClick={() => onSelect(track)}
                 onKeyDown={(event) => handleKeyDown(event, index)}
-                className={`group relative flex h-44 w-44 items-center justify-center rounded-full border transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:h-52 md:w-52 ${
+                className={`group relative flex h-[190px] w-[190px] items-center justify-center rounded-full border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:h-[200px] sm:w-[200px] md:h-[220px] md:w-[220px] ${
                   isActive
-                    ? 'border-aurora/80 bg-white/10 shadow-[0_0_30px_rgba(139,92,246,0.45)]'
-                    : 'border-white/10 bg-white/5 hover:border-aurora/40 hover:bg-white/10'
+                    ? 'scale-105 border-aurum/70 shadow-[0_0_40px_rgba(215,184,102,0.35)]'
+                    : 'hover:scale-[1.02] hover:border-aurum/40'
                 }`}
                 aria-label={`${track.title} by ${track.artist}`}
               >
-                <span
-                  className="pointer-events-none select-none text-3xl font-semibold uppercase tracking-[0.35em] text-starlight/90 group-hover:text-white"
-                >
-                  {initials[track.id]}
-                </span>
-                <div className="pointer-events-none absolute inset-x-4 bottom-4 rounded-full bg-black/60 px-3 py-1 text-xs text-white opacity-0 backdrop-blur transition group-hover:opacity-100">
-                  <span className="block font-semibold">{track.title}</span>
-                  <span className="text-starlight/70">{track.artist}</span>
+                <span className="pointer-events-none absolute inset-3 rounded-full border border-white/5 bg-white/5 opacity-50 blur-3xl" />
+                <span className="pointer-events-none absolute inset-1 rounded-full border border-white/5" />
+                <span className="pointer-events-none absolute inset-0 rounded-full border border-white/5 opacity-60" />
+                <div className="pointer-events-none absolute inset-5 rounded-full border border-aurum/10" />
+                <div className="pointer-events-none absolute inset-0 flex h-full w-full flex-col items-center justify-center text-center">
+                  <p className="max-w-[85%] text-base font-semibold leading-tight text-white sm:text-lg">
+                    {track.title}
+                  </p>
+                  <p className="mt-2 text-sm text-starlight/80">{track.artist}</p>
+                  <span className="mt-auto text-xs font-semibold uppercase tracking-[0.4em] text-aurum">{track.year}</span>
                 </div>
+                <span
+                  className={`pointer-events-none absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-aurum shadow-[0_0_12px_rgba(215,184,102,0.8)] ${
+                    isActive ? 'animate-orbital-loop' : 'opacity-0 group-hover:opacity-80'
+                  }`}
+                />
               </button>
             </div>
           );

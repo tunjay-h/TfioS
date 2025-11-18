@@ -1,16 +1,74 @@
-export function getTrackIdFromUrl(): string | null {
-  if (typeof window === 'undefined') return null;
-  const { searchParams } = new URL(window.location.href);
-  return searchParams.get('t');
+export const ROUTE_SEGMENTS = {
+  track: 'stars',
+  movie: 'movies',
+  quote: 'words',
+} as const;
+
+export type Route =
+  | { type: 'home' }
+  | { type: 'track'; id: string }
+  | { type: 'movie'; id: string }
+  | { type: 'quote'; id: string };
+
+function normalizePath(pathname: string) {
+  return pathname.replace(/\/+/g, '/').replace(/\/?$/, '') || '/';
 }
 
-export function updateTrackIdInUrl(trackId: string | null) {
-  if (typeof window === 'undefined' || !window.history?.pushState) return;
-  const url = new URL(window.location.href);
-  if (trackId) {
-    url.searchParams.set('t', trackId);
-  } else {
-    url.searchParams.delete('t');
+export function parseRouteFromLocation(): Route {
+  if (typeof window === 'undefined') {
+    return { type: 'home' };
   }
-  window.history.pushState({}, '', url);
+  const path = normalizePath(window.location.pathname);
+  if (path === '/') {
+    return { type: 'home' };
+  }
+  const segments = path.split('/').filter(Boolean);
+  const [segment, id] = segments;
+  if (segment === ROUTE_SEGMENTS.track && id) {
+    return { type: 'track', id };
+  }
+  if (segment === ROUTE_SEGMENTS.movie && id) {
+    return { type: 'movie', id };
+  }
+  if (segment === ROUTE_SEGMENTS.quote && id) {
+    return { type: 'quote', id };
+  }
+  return { type: 'home' };
+}
+
+export function buildPath(route: Route) {
+  switch (route.type) {
+    case 'home':
+      return '/';
+    case 'track':
+      return `/${ROUTE_SEGMENTS.track}/${route.id}`;
+    case 'movie':
+      return `/${ROUTE_SEGMENTS.movie}/${route.id}`;
+    case 'quote':
+      return `/${ROUTE_SEGMENTS.quote}/${route.id}`;
+    default:
+      return '/';
+  }
+}
+
+export function navigateToRoute(route: Route) {
+  if (typeof window === 'undefined' || !window.history?.pushState) {
+    return;
+  }
+  const path = buildPath(route);
+  if (normalizePath(window.location.pathname) === normalizePath(path)) {
+    return;
+  }
+  window.history.pushState({}, '', path);
+}
+
+export function buildShareUrl(route: Route) {
+  if (typeof window === 'undefined') {
+    return '';
+  }
+  const url = new URL(window.location.href);
+  url.pathname = buildPath(route);
+  url.search = '';
+  url.hash = '';
+  return url.toString();
 }
