@@ -1,52 +1,47 @@
 [
   {
-    "id": "tlp",
-    "slug": "the-little-prince",
+    "id": "the-little-prince",
     "title": "The Little Prince",
     "year": 2015,
     "poster": "https://image.tmdb.org/t/p/w500/wlVp9U9dY7cZBaHc3hXhN3kLB6x.jpg",
     "plot": "A brave girl discovers the timeless tale of the Little Prince, blurring the line between imagination and reality.",
     "imdbUrl": "https://www.imdb.com/title/tt1754656/",
-    "trailerEmbedUrl": "https://www.youtube-nocookie.com/embed/9gARHWfXe40"
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi439268377"
   },
   {
-    "id": "3i",
-    "slug": "3-idiots",
+    "id": "3-idiots",
     "title": "3 Idiots",
     "year": 2009,
     "poster": "https://image.tmdb.org/t/p/w500/66RvLrRJTm4J8l3uHXWFp0q7hHP.jpg",
     "plot": "Three friends reunite and revisit the wild journey that taught them to follow their hearts instead of convention.",
     "imdbUrl": "https://www.imdb.com/title/tt1187043/",
-    "trailerEmbedUrl": "https://www.youtube-nocookie.com/embed/xvszmNXdM4w"
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi1903930137"
   },
   {
     "id": "interstellar",
-    "slug": "interstellar",
     "title": "Interstellar",
     "year": 2014,
     "poster": "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
     "plot": "A team of explorers travel through a wormhole in space to ensure humanity's survival.",
     "imdbUrl": "https://www.imdb.com/title/tt0816692/",
-    "trailerEmbedUrl": "https://www.youtube-nocookie.com/embed/zSWdZVtXT7E"
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi1586271001"
   },
   {
     "id": "song-of-the-sea",
-    "slug": "song-of-the-sea",
     "title": "Song of the Sea",
     "year": 2014,
     "poster": "https://image.tmdb.org/t/p/w500/mGIJU8l7bFKwzG0QZr4Dr6TS2MR.jpg",
     "plot": "Ben and his little sister Saoirse embark on a magical journey rooted in Celtic myth.",
     "imdbUrl": "https://www.imdb.com/title/tt1865505/",
-    "trailerEmbedUrl": "https://www.youtube-nocookie.com/embed/h6Q5ZCLrIXM"
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi3750023449"
   },
   {
     "id": "little-women",
-    "slug": "little-women",
     "title": "Little Women",
     "year": 2019,
     "poster": "https://image.tmdb.org/t/p/w500/yn5ihODtZ7ofn8pDYfxCmxh8AXI.jpg",
     "plot": "Jo March reflects on her life with her three sisters as they push against the expectations placed on women.",
     "imdbUrl": "https://www.imdb.com/title/tt3281548/",
-    "trailerEmbedUrl": "https://www.youtube-nocookie.com/embed/AST2-4db4ic"
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi2163059993"
   }
 ]

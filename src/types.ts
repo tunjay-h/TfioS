@@ -26,7 +26,6 @@ export type Playlist = {
 
 export type Movie = {
   id: string;
-  slug: string;
   title: string;
   year: number;
   poster: string;

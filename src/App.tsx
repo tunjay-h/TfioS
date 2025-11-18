@@ -100,7 +100,7 @@ export default function App() {
       if (status !== 'blocked') {
         play().catch(() => undefined);
       }
-      const route = { type: 'movie', id: movie.slug } as const;
+      const route = { type: 'movie', id: movie.id } as const;
       rememberRoute(route);
       navigateToRoute(route);
     },
@@ -166,7 +166,7 @@ export default function App() {
       }
 
       if (route.type === 'movie') {
-        const movie = movies.find((item) => item.slug === route.id) ?? null;
+        const movie = movies.find((item) => item.id === route.id) ?? null;
         setSelectedMovie(movie);
         setIsMoviePanelOpen(Boolean(movie));
       } else if (route.type !== 'track') {
@@ -258,11 +258,7 @@ export default function App() {
           backgroundNote={meta.bgTrack.note}
         />
         <DiscSlider tracks={sortedTracks} activeTrackId={selectedTrack?.id ?? null} onSelect={selectTrack} />
-        <MovieSlider
-          movies={movies}
-          activeMovieSlug={selectedMovie?.slug ?? null}
-          onSelect={handleMovieSelect}
-        />
+        <MovieSlider movies={movies} activeMovieId={selectedMovie?.id ?? null} onSelect={handleMovieSelect} />
         <QuotesCarousel
           quotes={quotes}
           controlledQuoteId={forcedQuoteId}

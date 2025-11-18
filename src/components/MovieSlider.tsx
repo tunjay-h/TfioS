@@ -3,11 +3,11 @@ import { Movie } from '../types';
 
 export type MovieSliderProps = {
   movies: Movie[];
-  activeMovieSlug: string | null;
+  activeMovieId: string | null;
   onSelect: (movie: Movie) => void;
 };
 
-export function MovieSlider({ movies, activeMovieSlug, onSelect }: MovieSliderProps) {
+export function MovieSlider({ movies, activeMovieId, onSelect }: MovieSliderProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const handleKeyDown = useCallback(
@@ -42,7 +42,7 @@ export function MovieSlider({ movies, activeMovieSlug, onSelect }: MovieSliderPr
         aria-label="Movie cards"
       >
         {movies.map((movie, index) => {
-          const isActive = activeMovieSlug === movie.slug;
+          const isActive = activeMovieId === movie.id;
           return (
             <div key={movie.id} className="snap-start">
               <button
