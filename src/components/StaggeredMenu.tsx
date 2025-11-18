@@ -63,12 +63,27 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
         type="button"
         aria-expanded={open}
         aria-controls="tfios-menu-panel"
+        aria-label={open ? 'Close menu' : 'Open menu'}
         onClick={() => setOpen((prev) => !prev)}
-        className="group inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-5 py-2 text-sm font-semibold uppercase tracking-[0.3em] text-white backdrop-blur transition hover:border-aurum/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        className="group inline-flex items-center gap-3 rounded-full border border-white/30 bg-black/30 px-4 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-white/90 backdrop-blur focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
-        <span className="text-xs">Menu</span>
-        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lg font-light transition group-hover:bg-white/20">
-          {open ? '−' : '+'}
+        <span className="pointer-events-none select-none">Menu</span>
+        <span className="relative flex h-5 w-6 items-center justify-center">
+          <span
+            className={`absolute block h-[2px] w-full rounded-full bg-current transition-transform duration-300 ${
+              open ? 'translate-y-0 rotate-45' : '-translate-y-1.5 rotate-0'
+            }`}
+          />
+          <span
+            className={`absolute block h-[2px] w-full rounded-full bg-current transition-opacity duration-300 ${
+              open ? 'opacity-0' : 'opacity-100'
+            }`}
+          />
+          <span
+            className={`absolute block h-[2px] w-full rounded-full bg-current transition-transform duration-300 ${
+              open ? 'translate-y-0 -rotate-45' : 'translate-y-1.5 rotate-0'
+            }`}
+          />
         </span>
       </button>
 
@@ -95,50 +110,75 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
               id="tfios-menu-panel"
               role="dialog"
               aria-modal="true"
-              className="absolute inset-y-0 right-0 flex h-full w-full max-w-xl flex-col overflow-hidden rounded-l-[3rem] border-l border-white/10 bg-gradient-to-b from-white/90 via-white/80 to-white/70 text-midnight shadow-2xl"
+              className="absolute inset-y-0 right-0 flex h-full w-full max-w-[420px] flex-col overflow-hidden rounded-l-[3rem] border-l border-white/20 bg-gradient-to-b from-white/95 via-white/90 to-white/85 text-midnight shadow-[0_0_80px_rgba(10,14,26,0.35)]"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: transitionDuration, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="pointer-events-none absolute inset-0 -z-10 opacity-40">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(82,39,255,0.35),_transparent_60%)]" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(209,152,70,0.4),_transparent_65%)]" />
-              </div>
-
-              <div className="flex items-center justify-between px-10 pb-6 pt-8">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.4em] text-neutral-500">Navigation</p>
-                  <p className="text-lg font-semibold text-midnight">Beyond the tracks</p>
+              <div className="flex items-start justify-between px-12 pb-4 pt-10">
+                <div className="space-y-2">
+                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.65em] text-neutral-500">Navigation</p>
+                  <p className="text-xl font-semibold text-midnight">Beyond the tracks</p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-midnight transition hover:bg-white"
+                  className="text-sm font-semibold uppercase tracking-[0.4em] text-midnight/70 transition hover:text-midnight"
                 >
                   Close
                 </button>
               </div>
 
-              <nav className="flex flex-1 flex-col justify-between px-10 pb-10">
-                <ul className="space-y-6">
+              <nav className="flex flex-1 flex-col justify-between px-12 pb-12">
+                <motion.ul
+                  className="space-y-7"
+                  initial="closed"
+                  animate="open"
+                  exit="closed"
+                  variants={{
+                    open: {
+                      transition: {
+                        staggerChildren: prefersReducedMotion ? 0 : 0.08,
+                        delayChildren: prefersReducedMotion ? 0 : 0.1,
+                      },
+                    },
+                    closed: {
+                      transition: {
+                        staggerChildren: prefersReducedMotion ? 0 : 0.05,
+                        staggerDirection: -1,
+                      },
+                    },
+                  }}
+                >
                   {menuItems.map((item, index) => (
                     <motion.li
                       key={item.label}
-                      className="border-b border-black/10 pb-4"
-                      initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 24 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        duration: prefersReducedMotion ? 0 : 0.5,
-                        delay: prefersReducedMotion ? 0 : 0.08 * index,
-                        ease: prefersReducedMotion ? 'linear' : [0.22, 1, 0.36, 1],
+                      className="border-b border-black/5 pb-6"
+                      variants={{
+                        open: {
+                          opacity: 1,
+                          y: 0,
+                          transition: {
+                            duration: prefersReducedMotion ? 0 : 0.5,
+                            ease: prefersReducedMotion ? 'linear' : [0.16, 1, 0.3, 1],
+                          },
+                        },
+                        closed: {
+                          opacity: 0,
+                          y: prefersReducedMotion ? 0 : 32,
+                          transition: {
+                            duration: prefersReducedMotion ? 0 : 0.2,
+                            ease: 'linear',
+                          },
+                        },
                       }}
                     >
                       <a
                         href={item.href}
                         target={item.external ? '_blank' : undefined}
                         rel={item.external ? 'noreferrer noopener' : undefined}
-                        className="group flex items-center justify-between text-4xl font-semibold uppercase tracking-tight text-midnight/80 transition hover:text-midnight"
+                        className="group flex items-baseline justify-between gap-6 text-[clamp(2rem,5vw,3.5rem)] font-semibold uppercase tracking-tight text-midnight/80 transition hover:text-midnight"
                         onClick={(event) => {
                           if (item.label === 'Home' && onHome) {
                             event.preventDefault();
@@ -147,19 +187,16 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
                           setOpen(false);
                         }}
                       >
-                        <span className="flex items-center gap-4">
-                          <span className="text-sm font-bold text-aurora/80">{String(index + 1).padStart(2, '0')}</span>
-                          {item.label}
-                        </span>
-                        <span className="text-xs font-semibold uppercase tracking-[0.4em] text-neutral-500">
-                          {item.external ? 'Open' : 'Enter'}
+                        <span className="block leading-none">{item.label}</span>
+                        <span className="text-sm font-semibold tracking-[0.4em] text-aurora/70">
+                          {String(index + 1).padStart(2, '0')}
                         </span>
                       </a>
                     </motion.li>
                   ))}
-                </ul>
+                </motion.ul>
 
-                <p className="text-xs uppercase tracking-[0.4em] text-neutral-500">
+                <p className="text-[0.65rem] uppercase tracking-[0.5em] text-neutral-500/80">
                   hello@tfios.app · crafted amongst the stars
                 </p>
               </nav>
