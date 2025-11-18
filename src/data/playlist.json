@@ -15,84 +15,91 @@
       "id": "kodaline-all-i-want",
       "title": "All I Want",
       "artist": "Kodaline",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/mtf7hC17IBM?si=nxHTWhy2Row0Gsqk",
       "openUrl": "https://www.youtube.com/results?search_query=Kodaline+All+I+Want"
     },
     {
       "id": "the-script-the-man-who-cant-be-moved",
       "title": "The Man Who Can’t Be Moved",
       "artist": "The Script",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/gS9o1FAszdk?si=9v-SglAEmLNwJD-R",
       "openUrl": "https://www.youtube.com/results?search_query=The+Script+The+Man+Who+Can%27t+Be+Moved"
     },
     {
       "id": "onerepublic-lets-hurt-tonight",
       "title": "Let’s Hurt Tonight",
       "artist": "OneRepublic",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/8wGN7D03Nho?si=4A-OUOR6BQHSdGMg",
       "openUrl": "https://www.youtube.com/results?search_query=OneRepublic+Let%27s+Hurt+Tonight"
     },
     {
       "id": "onerepublic-come-home",
       "title": "Come Home",
       "artist": "OneRepublic",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/ZCy19UUeqIE?si=0gJ54jdtxCaXFI-E",
       "openUrl": "https://www.youtube.com/results?search_query=OneRepublic+Come+Home"
     },
     {
       "id": "linkin-park-one-more-light",
       "title": "One More Light",
       "artist": "Linkin Park",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/Tm8LGxTLtQk?si=XLUUZuX2TA4s_8pS",
       "openUrl": "https://www.youtube.com/results?search_query=Linkin+Park+One+More+Light"
     },
     {
       "id": "song-of-the-sea",
       "title": "Song of the Sea (From the film)",
       "artist": "Bruno Coulais / Lisa Hannigan",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/IFlioLWmE7k?si=4ouM3faHaf1SqCx7",
       "openUrl": "https://www.youtube.com/results?search_query=Song+of+the+Sea+Lisa+Hannigan"
     },
     {
       "id": "the-script-no-good-in-goodbye",
       "title": "No Good in Goodbye",
       "artist": "The Script",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/ZRNTOabGsDk?si=ayvCRHYJ0qWA9nza",
       "openUrl": "https://www.youtube.com/results?search_query=The+Script+No+Good+in+Goodbye"
     },
     {
       "id": "yann-tiersen-amelie-comptine",
       "title": "Comptine d’un autre été (Amélie)",
       "artist": "Yann Tiersen",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/znfYwABeSZ0?si=BOTYuI-sKmEOIJaU",
       "openUrl": "https://www.youtube.com/results?search_query=Yann+Tiersen+Comptine+d%27un+autre+ete"
     },
     {
       "id": "snow-patrol-chasing-cars",
       "title": "Chasing Cars",
       "artist": "Snow Patrol",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/GemKqzILV4w?si=hFqBAVehIwyb77dS",
       "openUrl": "https://www.youtube.com/results?search_query=Snow+Patrol+Chasing+Cars"
     },
     {
       "id": "sting-shape-of-my-heart",
       "title": "Shape of My Heart",
       "artist": "Sting",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/NlwIDxCjL-8?si=KZpiT1x6UOOqp_jn",
       "openUrl": "https://www.youtube.com/results?search_query=Sting+Shape+of+My+Heart"
     },
     {
       "id": "coldplay-yellow",
       "title": "Yellow",
       "artist": "Coldplay",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/yKNxeF4KMsY?si=sbEUpA8CJH35tvuj",
       "openUrl": "https://www.youtube.com/results?search_query=Coldplay+Yellow"
+    },
+    {
+      "id": "coldplay-viva-la-vida",
+      "title": "Viva La Vida",
+      "artist": "Coldplay",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/dvgZkm1xWPE?si=ftpmyldL5ZuaMwIp",
+      "openUrl": "https://www.youtube.com/results?search_query=Coldplay+Viva+La+Vida"
     },
     {
       "id": "imagine-dragons-birds",
       "title": "Birds",
       "artist": "Imagine Dragons",
-      "embedUrl": null,
+      "embedUrl": "https://www.youtube-nocookie.com/embed/vOXZkm9p_zY?si=3yrXgw8VuEStAT2N",
       "openUrl": "https://www.youtube.com/results?search_query=Imagine+Dragons+Birds"
     }
   ]

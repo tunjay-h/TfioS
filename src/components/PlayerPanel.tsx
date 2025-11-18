@@ -50,7 +50,8 @@ export function PlayerPanel({ track, isOpen, onClose, onShare }: PlayerPanelProp
                   src={track.embedUrl}
                   title={`${track.title} player`}
                   className="h-64 w-full rounded-2xl"
-                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
                   allowFullScreen
                 />
               ) : (
