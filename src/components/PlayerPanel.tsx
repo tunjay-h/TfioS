@@ -34,6 +34,7 @@ export function PlayerPanel({ track, isOpen, onClose, onShare }: PlayerPanelProp
                   {track.title}
                 </h3>
                 <p className="text-sm text-starlight/70">{track.artist}</p>
+                <p className="text-xs uppercase tracking-[0.4em] text-aurum">{track.year}</p>
               </div>
               <button
                 type="button"
