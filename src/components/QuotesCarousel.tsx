@@ -115,7 +115,7 @@ export function QuotesCarousel({
         <h2 id="quotes-heading" className="font-display text-2xl font-semibold text-white">
           Words carried by stardust
         </h2>
-        <p className="text-sm text-starlight/70">Swipe, tap, or use arrow keys to linger on a quote.</p>
+        <p className="text-sm text-starlight/70">Swipe, tap, or use arrow keys.</p>
       </div>
       <div
         role="region"

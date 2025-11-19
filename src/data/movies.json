@@ -3,45 +3,81 @@
     "id": "the-little-prince",
     "title": "The Little Prince",
     "year": 2015,
-    "poster": "https://image.tmdb.org/t/p/w500/wlVp9U9dY7cZBaHc3hXhN3kLB6x.jpg",
+    "poster": "https://m.media-amazon.com/images/M/MV5BNjg0OTM5OTQyNV5BMl5BanBnXkFtZTgwNDg5NDQ0NTE@.jpg",
     "plot": "A brave girl discovers the timeless tale of the Little Prince, blurring the line between imagination and reality.",
     "imdbUrl": "https://www.imdb.com/title/tt1754656/",
     "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi439268377"
   },
   {
+    "id": "song-of-the-sea",
+    "title": "Song of the Sea",
+    "year": 2014,
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTQ2MDMwNjEwNV5BMl5BanBnXkFtZTgwOTkxMzI0MzE@.jpg",
+    "plot": "Ben, a young Irish boy, and his little sister Saoirse, a girl who can turn into a seal, go on an adventure to free the fairies and save the spirit world.",
+    "imdbUrl": "https://www.imdb.com/title/tt1865505/",
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi3133192729"
+  },
+  {
+    "id": "your-lie-in-april",
+    "title": "Your Lie in April",
+    "year": 2016,
+    "poster": "https://m.media-amazon.com/images/M/MV5BZGMyYmFmNzgtMWQ4NS00MWE2LTg4YmEtZGY1MTBiODE0YmE5XkEyXkFqcGc@.jpg",
+    "plot": "A piano prodigy who lost his ability to play after suffering a traumatic event in his childhood is forced back into the spotlight by an eccentric girl with a secret of her own.",
+    "imdbUrl": "https://www.imdb.com/title/tt3895150/",
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi4287611161"
+  },
+  {
+    "id": "wolfwalkers",
+    "title": "Wolfwalkers",
+    "year": 2020,
+    "poster": "https://m.media-amazon.com/images/M/MV5BYzg3MjBkYmYtZjZkZS00YWVkLTk3YjMtNDBlMTVmNDZkZDJhXkEyXkFqcGc@.jpg",
+    "plot": "A young apprentice hunter and her father journey to Ireland to help wipe out the last wolf pack. But everything changes when she befriends a free-spirited girl from a mysterious tribe rumored to transform into wolves by night.",
+    "imdbUrl": "https://www.imdb.com/title/tt5198068/",
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi217628697"
+  },
+  {
     "id": "3-idiots",
     "title": "3 Idiots",
     "year": 2009,
-    "poster": "https://image.tmdb.org/t/p/w500/66RvLrRJTm4J8l3uHXWFp0q7hHP.jpg",
+    "poster": "https://m.media-amazon.com/images/M/MV5BNzc4ZWQ3NmYtODE0Ny00YTQ4LTlkZWItNTBkMGQ0MmUwMmJlXkEyXkFqcGc@.jpg",
     "plot": "Three friends reunite and revisit the wild journey that taught them to follow their hearts instead of convention.",
     "imdbUrl": "https://www.imdb.com/title/tt1187043/",
-    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi1903930137"
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi3086596889"
+  },
+  {
+    "id": "the-fault-in-our-stars",
+    "title": "The Fault in Our Stars",
+    "year": 2014,
+    "poster": "https://m.media-amazon.com/images/M/MV5BYTA4ODg5YWUtYmZiYy00Y2M4LWE0NjEtODE5MzhkYmJmZGEwXkEyXkFqcGc@.jpg",
+    "plot": "Hazel and Gus are teenagers who meet at a cancer support group and fall in love. They both share the same acerbic wit and a love of books, especially \"An Imperial Affliction\", so they embark on a journey to visit an author in Amsterdam.",
+    "imdbUrl": "https://www.imdb.com/title/tt2582846/",
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi2313071897"
+  },
+  {
+    "id": "inception",
+    "title": "Inception",
+    "year": 2010,
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@.jpg",
+    "plot": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.",
+    "imdbUrl": "https://www.imdb.com/title/tt1375666/",
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi2959588889"
+  },
+  {
+    "id": "transcendence",
+    "title": "Transcendence",
+    "year": 2014,
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTc1MjQ3ODAyOV5BMl5BanBnXkFtZTgwNjI1NDQ0MTE@.jpg",
+    "plot": "A scientist's drive for artificial intelligence takes on dangerous implications when his own consciousness is uploaded into one such program.",
+    "imdbUrl": "https://www.imdb.com/title/tt2209764/",
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi586787609"
   },
   {
     "id": "interstellar",
     "title": "Interstellar",
     "year": 2014,
-    "poster": "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+    "poster": "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@.jpg",
     "plot": "A team of explorers travel through a wormhole in space to ensure humanity's survival.",
     "imdbUrl": "https://www.imdb.com/title/tt0816692/",
-    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi1586271001"
-  },
-  {
-    "id": "song-of-the-sea",
-    "title": "Song of the Sea",
-    "year": 2014,
-    "poster": "https://image.tmdb.org/t/p/w500/mGIJU8l7bFKwzG0QZr4Dr6TS2MR.jpg",
-    "plot": "Ben and his little sister Saoirse embark on a magical journey rooted in Celtic myth.",
-    "imdbUrl": "https://www.imdb.com/title/tt1865505/",
-    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi3750023449"
-  },
-  {
-    "id": "little-women",
-    "title": "Little Women",
-    "year": 2019,
-    "poster": "https://image.tmdb.org/t/p/w500/yn5ihODtZ7ofn8pDYfxCmxh8AXI.jpg",
-    "plot": "Jo March reflects on her life with her three sisters as they push against the expectations placed on women.",
-    "imdbUrl": "https://www.imdb.com/title/tt3281548/",
-    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi2163059993"
+    "trailerEmbedUrl": "https://www.imdb.com/video/embed/vi1586278169"
   }
 ]
