@@ -3,6 +3,7 @@ export type Track = {
   title: string;
   artist: string;
   year: number;
+  coverUrl?: string | null;
   embedUrl: string | null;
   openUrl: string;
 };

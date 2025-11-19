@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 type NavItem = {
   label: string;
@@ -18,12 +17,19 @@ const navItems: NavItem[] = [
 export type StaggeredMenuProps = {
   className?: string;
   onHome?: () => void;
+  animationsEnabled: boolean;
+  onToggleAnimations: () => void;
 };
 
-export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
-  const prefersReducedMotion = usePrefersReducedMotion();
+export function StaggeredMenu({
+  className = '',
+  onHome,
+  animationsEnabled,
+  onToggleAnimations,
+}: StaggeredMenuProps) {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const disableMotion = !animationsEnabled;
 
   useEffect(() => {
     if (!open) return undefined;
@@ -54,7 +60,7 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
 
   const menuItems = useMemo(() => navItems, []);
 
-  const transitionDuration = prefersReducedMotion ? 0 : 0.45;
+  const transitionDuration = disableMotion ? 0 : 0.45;
 
   return (
     <div className={`relative ${className}`}>
@@ -65,13 +71,12 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
         aria-controls="tfios-menu-panel"
         aria-label={open ? 'Close menu' : 'Open menu'}
         onClick={() => setOpen((prev) => !prev)}
-        className="group inline-flex items-center gap-3 rounded-full border border-white/30 bg-black/30 px-4 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-white/90 backdrop-blur focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        className="group inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-black/40 p-0 text-white/90 backdrop-blur focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
-        <span className="pointer-events-none select-none">Menu</span>
-        <span className="relative flex h-5 w-6 items-center justify-center">
+        <span className="relative flex h-5 w-6 items-center justify-center" aria-hidden>
           <span
             className={`absolute block h-[2px] w-full rounded-full bg-current transition-transform duration-300 ${
-              open ? 'translate-y-0 rotate-45' : '-translate-y-1.5 rotate-0'
+              open ? 'translate-y-0 rotate-45' : '-translate-y-2'
             }`}
           />
           <span
@@ -81,7 +86,7 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
           />
           <span
             className={`absolute block h-[2px] w-full rounded-full bg-current transition-transform duration-300 ${
-              open ? 'translate-y-0 -rotate-45' : 'translate-y-1.5 rotate-0'
+              open ? 'translate-y-0 -rotate-45' : 'translate-y-2'
             }`}
           />
         </span>
@@ -94,7 +99,7 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
+            transition={{ duration: disableMotion ? 0 : 0.2 }}
           >
             <motion.div
               className="absolute inset-0 bg-black/60"
@@ -102,7 +107,7 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+              transition={{ duration: disableMotion ? 0 : 0.3 }}
               onClick={() => setOpen(false)}
             />
 
@@ -116,42 +121,44 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
               exit={{ x: '100%' }}
               transition={{ duration: transitionDuration, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="flex items-start justify-between px-12 pb-4 pt-10">
-                <div className="space-y-2">
-                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.65em] text-neutral-500">Navigation</p>
+              <div className="flex h-full flex-col overflow-hidden">
+                <div className="flex items-center justify-between px-12 pb-6 pt-12">
                   <p className="text-xl font-semibold text-midnight">Beyond the tracks</p>
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    aria-label="Close menu"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-midnight/70 transition hover:text-midnight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                  >
+                    <span className="relative block h-4 w-4">
+                      <span className="absolute inset-x-0 top-1/2 block h-[2px] -translate-y-1/2 rotate-45 bg-current" />
+                      <span className="absolute inset-x-0 top-1/2 block h-[2px] -translate-y-1/2 -rotate-45 bg-current" />
+                    </span>
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="text-sm font-semibold uppercase tracking-[0.4em] text-midnight/70 transition hover:text-midnight"
-                >
-                  Close
-                </button>
-              </div>
 
-              <nav className="flex flex-1 flex-col justify-between px-12 pb-12">
-                <motion.ul
-                  className="space-y-7"
-                  initial="closed"
-                  animate="open"
-                  exit="closed"
-                  variants={{
-                    open: {
-                      transition: {
-                        staggerChildren: prefersReducedMotion ? 0 : 0.08,
-                        delayChildren: prefersReducedMotion ? 0 : 0.1,
+                <nav className="flex-1 overflow-y-auto px-12 pb-8">
+                  <motion.ul
+                    className="space-y-7"
+                    initial="closed"
+                    animate="open"
+                    exit="closed"
+                    variants={{
+                      open: {
+                        transition: {
+                          staggerChildren: disableMotion ? 0 : 0.08,
+                          delayChildren: disableMotion ? 0 : 0.1,
+                        },
                       },
-                    },
-                    closed: {
-                      transition: {
-                        staggerChildren: prefersReducedMotion ? 0 : 0.05,
-                        staggerDirection: -1,
+                      closed: {
+                        transition: {
+                          staggerChildren: disableMotion ? 0 : 0.05,
+                          staggerDirection: -1,
+                        },
                       },
-                    },
                   }}
                 >
-                  {menuItems.map((item, index) => (
+                  {menuItems.map((item) => (
                     <motion.li
                       key={item.label}
                       className="border-b border-black/5 pb-6"
@@ -160,15 +167,15 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
                           opacity: 1,
                           y: 0,
                           transition: {
-                            duration: prefersReducedMotion ? 0 : 0.5,
-                            ease: prefersReducedMotion ? 'linear' : [0.16, 1, 0.3, 1],
+                            duration: disableMotion ? 0 : 0.5,
+                            ease: disableMotion ? 'linear' : [0.16, 1, 0.3, 1],
                           },
                         },
                         closed: {
                           opacity: 0,
-                          y: prefersReducedMotion ? 0 : 32,
+                          y: disableMotion ? 0 : 32,
                           transition: {
-                            duration: prefersReducedMotion ? 0 : 0.2,
+                            duration: disableMotion ? 0 : 0.2,
                             ease: 'linear',
                           },
                         },
@@ -178,7 +185,7 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
                         href={item.href}
                         target={item.external ? '_blank' : undefined}
                         rel={item.external ? 'noreferrer noopener' : undefined}
-                        className="group flex items-baseline justify-between gap-6 text-[clamp(2rem,5vw,3.5rem)] font-semibold uppercase tracking-tight text-midnight/80 transition hover:text-midnight"
+                        className="group flex items-center justify-between gap-6 text-[clamp(2rem,5vw,3.5rem)] font-semibold uppercase tracking-tight text-midnight/80 transition hover:text-midnight"
                         onClick={(event) => {
                           if (item.label === 'Home' && onHome) {
                             event.preventDefault();
@@ -188,18 +195,29 @@ export function StaggeredMenu({ className = '', onHome }: StaggeredMenuProps) {
                         }}
                       >
                         <span className="block leading-none">{item.label}</span>
-                        <span className="text-sm font-semibold tracking-[0.4em] text-aurora/70">
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
                       </a>
                     </motion.li>
                   ))}
                 </motion.ul>
-
-                <p className="text-[0.65rem] uppercase tracking-[0.5em] text-neutral-500/80">
-                  hello@tfios.app · crafted amongst the stars
-                </p>
-              </nav>
+                </nav>
+                <div className="px-12 pb-10 pt-4 text-sm text-midnight/70">
+                  <div className="flex items-center justify-between gap-4 border-t border-black/10 py-4">
+                    <span className="text-xs font-semibold uppercase tracking-[0.4em]">Animations</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onToggleAnimations();
+                      }}
+                      className="rounded-full border border-black/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-midnight/80 transition hover:text-midnight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                    >
+                      {animationsEnabled ? 'On' : 'Off'}
+                    </button>
+                  </div>
+                  <p className="text-[0.65rem] uppercase tracking-[0.4em] text-neutral-500/80">
+                    hello@tfios.app · crafted amongst the stars
+                  </p>
+                </div>
+              </div>
             </motion.aside>
           </motion.div>
         ) : null}

@@ -1,6 +1,5 @@
 import { useEffect, useRef, type HTMLAttributes } from 'react';
 import { Color, Mesh, Program, Renderer, Triangle } from 'ogl';
-import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 const vertexShader = `
 attribute vec2 uv;
@@ -349,17 +348,21 @@ function Galaxy({
   return <div ref={ctnDom} className={className ?? 'w-full h-full relative'} {...rest} />;
 }
 
-export function GalaxyBackground() {
-  const prefersReducedMotion = usePrefersReducedMotion();
+export type GalaxyBackgroundProps = {
+  animationsEnabled: boolean;
+};
+
+export function GalaxyBackground({ animationsEnabled }: GalaxyBackgroundProps) {
+  const disableAnimation = !animationsEnabled;
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
       <div className="absolute inset-0 bg-gradient-to-b from-[#050714] via-[#080C18] to-[#020309]" />
       <Galaxy
         className="absolute inset-0"
-        disableAnimation={prefersReducedMotion}
-        mouseInteraction={!prefersReducedMotion}
-        autoCenterRepulsion={prefersReducedMotion ? 0.1 : 0}
+        disableAnimation={disableAnimation}
+        mouseInteraction={!disableAnimation}
+        autoCenterRepulsion={disableAnimation ? 0.1 : 0}
         transparent
         hueShift={210}
         glowIntensity={0.45}

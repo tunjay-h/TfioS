@@ -52,17 +52,21 @@ export function MovieSlider({ movies, activeMovieId, onSelect }: MovieSliderProp
                 aria-selected={isActive}
                 onClick={() => onSelect(movie)}
                 onKeyDown={(event) => handleKeyDown(event, index)}
-                className={`group relative flex h-80 w-52 flex-col overflow-hidden rounded-3xl border border-white/10 bg-black/30 text-left text-white shadow-xl transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white ${
+                className={`group relative flex w-52 flex-col overflow-hidden rounded-3xl border border-white/10 bg-black/30 text-left text-white shadow-xl transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white ${
                   isActive ? 'scale-105 border-aurum/60' : 'hover:scale-[1.02] hover:border-aurum/30'
                 }`}
                 aria-label={`${movie.title} (${movie.year})`}
               >
-                <img
-                  src={movie.poster}
-                  alt={`${movie.title} poster`}
-                  className="h-60 w-full object-cover object-center transition duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
+                <div className="relative w-full overflow-hidden">
+                  <div className="aspect-[2/3] w-full overflow-hidden">
+                    <img
+                      src={movie.poster}
+                      alt={`${movie.title} poster`}
+                      className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
                 <div className="flex flex-1 flex-col gap-1 px-4 py-3">
                   <p className="text-base font-semibold leading-tight">{movie.title}</p>
                   <p className="text-sm text-starlight/70">{movie.year}</p>

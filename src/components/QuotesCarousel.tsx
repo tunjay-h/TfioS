@@ -1,23 +1,29 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Quote } from '../types';
-import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 export type QuotesCarouselProps = {
   quotes: Quote[];
   controlledQuoteId: string | null;
   onQuoteChange: (quote: Quote, source: 'auto' | 'user') => void;
   autoAdvancePaused: boolean;
+  animationsEnabled: boolean;
 };
 
 const AUTO_ADVANCE_MS = 9000;
 
-export function QuotesCarousel({ quotes, controlledQuoteId, onQuoteChange, autoAdvancePaused }: QuotesCarouselProps) {
-  const prefersReducedMotion = usePrefersReducedMotion();
+export function QuotesCarousel({
+  quotes,
+  controlledQuoteId,
+  onQuoteChange,
+  autoAdvancePaused,
+  animationsEnabled,
+}: QuotesCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasEnteredView, setHasEnteredView] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const pointerStart = useRef<number | null>(null);
+  const shouldReduceMotion = !animationsEnabled;
 
   const goToIndex = useCallback(
     (nextIndex: number, source: 'auto' | 'user') => {
@@ -56,14 +62,14 @@ export function QuotesCarousel({ quotes, controlledQuoteId, onQuoteChange, autoA
   }, []);
 
   useEffect(() => {
-    if (prefersReducedMotion || autoAdvancePaused || !hasEnteredView || quotes.length <= 1) {
+    if (shouldReduceMotion || autoAdvancePaused || !hasEnteredView || quotes.length <= 1) {
       return undefined;
     }
     const timer = window.setInterval(() => {
       goToIndex(currentIndex + 1, 'auto');
     }, AUTO_ADVANCE_MS);
     return () => window.clearInterval(timer);
-  }, [autoAdvancePaused, currentIndex, goToIndex, hasEnteredView, prefersReducedMotion, quotes.length]);
+  }, [autoAdvancePaused, currentIndex, goToIndex, hasEnteredView, quotes.length, shouldReduceMotion]);
 
   const handleNext = useCallback(() => {
     goToIndex(currentIndex + 1, 'user');
@@ -101,7 +107,7 @@ export function QuotesCarousel({ quotes, controlledQuoteId, onQuoteChange, autoA
   };
 
   const activeQuote = quotes[currentIndex];
-  const fadeDuration = prefersReducedMotion ? 0.1 : 0.7;
+  const fadeDuration = shouldReduceMotion ? 0.1 : 0.7;
 
   return (
     <section ref={containerRef} className="relative z-10" aria-labelledby="quotes-heading">

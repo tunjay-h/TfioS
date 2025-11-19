@@ -14,6 +14,7 @@ import { StaggeredMenu } from './components/StaggeredMenu';
 import { PlayerPanel } from './components/PlayerPanel';
 import { Toast } from './components/Toast';
 import { buildShareUrl, navigateToRoute, parseRouteFromLocation, type Route } from './lib/url';
+import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion';
 
 const playlist = playlistData as Playlist;
 const moviesCollection = moviesData as Movie[];
@@ -27,6 +28,7 @@ export default function App() {
     meta.bgTrack.src,
     meta.bgTrack.volume,
   );
+  const systemPrefersReducedMotion = usePrefersReducedMotion();
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
@@ -34,8 +36,40 @@ export default function App() {
   const [forcedQuoteId, setForcedQuoteId] = useState<string | null>(null);
   const [quoteAutoPaused, setQuoteAutoPaused] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const [animationsEnabled, setAnimationsEnabled] = useState(true);
   const toastTimeout = useRef<number | null>(null);
   const lastNonTrackRoute = useRef<Route>({ type: 'home' });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      setAnimationsEnabled(!systemPrefersReducedMotion);
+      return;
+    }
+    try {
+      const stored = window.localStorage.getItem('tfios-animations');
+      if (stored === 'on' || stored === 'off') {
+        setAnimationsEnabled(stored === 'on');
+      } else {
+        setAnimationsEnabled(!systemPrefersReducedMotion);
+      }
+    } catch {
+      setAnimationsEnabled(!systemPrefersReducedMotion);
+    }
+  }, [systemPrefersReducedMotion]);
+
+  const handleToggleAnimations = useCallback(() => {
+    setAnimationsEnabled((prev) => {
+      const next = !prev;
+      try {
+        if (typeof window !== 'undefined') {
+          window.localStorage.setItem('tfios-animations', next ? 'on' : 'off');
+        }
+      } catch {
+        // ignore write errors
+      }
+      return next;
+    });
+  }, []);
 
   const rememberRoute = useCallback((route: Route) => {
     if (route.type !== 'track') {
@@ -243,10 +277,14 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-midnight">
-      <GalaxyBackground />
+      <GalaxyBackground animationsEnabled={animationsEnabled} />
       <main className="relative z-10 mx-auto flex max-w-7xl flex-col gap-12 px-4 pb-32 pt-6 sm:px-8 lg:px-10">
         <div className="flex justify-end">
-          <StaggeredMenu onHome={goHome} />
+          <StaggeredMenu
+            onHome={goHome}
+            animationsEnabled={animationsEnabled}
+            onToggleAnimations={handleToggleAnimations}
+          />
         </div>
         <Header
           status={status}
@@ -264,6 +302,7 @@ export default function App() {
           controlledQuoteId={forcedQuoteId}
           onQuoteChange={handleQuoteChange}
           autoAdvancePaused={quoteAutoPaused}
+          animationsEnabled={animationsEnabled}
         />
       </main>
       <PlayerPanel track={selectedTrack} isOpen={isPanelOpen} onClose={closePanel} onShare={handleShare} />
