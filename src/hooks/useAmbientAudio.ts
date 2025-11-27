@@ -9,12 +9,14 @@ export function useAmbientAudio(src: string, volume: number) {
   const warmupScheduledRef = useRef(false);
   const [status, setStatus] = useState<AmbientStatus>('idle');
   const [muted, setMuted] = useState(false);
+  const [isStarting, setIsStarting] = useState(false);
 
   const disposeAudio = useCallback(() => {
     cleanupRef.current?.();
     cleanupRef.current = null;
     audioRef.current = null;
     setStatus('idle');
+    setIsStarting(false);
   }, []);
 
   const setupAudio = useCallback(() => {
@@ -27,9 +29,18 @@ export function useAmbientAudio(src: string, volume: number) {
     audio.muted = muted;
     audioRef.current = audio;
 
-    const handlePlaying = () => setStatus(audio.muted ? 'muted' : 'playing');
-    const handlePause = () => setStatus(audio.muted ? 'muted' : 'stopped');
-    const handleError = () => setStatus('error');
+    const handlePlaying = () => {
+      setIsStarting(false);
+      setStatus(audio.muted ? 'muted' : 'playing');
+    };
+    const handlePause = () => {
+      setIsStarting(false);
+      setStatus(audio.muted ? 'muted' : 'stopped');
+    };
+    const handleError = () => {
+      setIsStarting(false);
+      setStatus('error');
+    };
 
     audio.addEventListener('playing', handlePlaying);
     audio.addEventListener('pause', handlePause);
@@ -58,11 +69,14 @@ export function useAmbientAudio(src: string, volume: number) {
   const play = useCallback(async () => {
     const audio = audioRef.current;
     if (!audio) return;
+    setIsStarting(true);
     try {
       await audio.play();
       setStatus(muted ? 'muted' : 'playing');
+      setIsStarting(false);
     } catch (error) {
       setStatus('blocked');
+      setIsStarting(false);
       throw error;
     }
   }, [muted]);
@@ -72,6 +86,7 @@ export function useAmbientAudio(src: string, volume: number) {
     if (!audio) return;
     audio.pause();
     setStatus(audio.muted ? 'muted' : 'stopped');
+    setIsStarting(false);
   }, []);
 
   const toggleMute = useCallback(() => {
@@ -93,11 +108,14 @@ export function useAmbientAudio(src: string, volume: number) {
     const audio = setupAudio();
     if (!audio) return;
 
+    setIsStarting(true);
     try {
       await audio.play();
       setStatus(audio.muted ? 'muted' : 'playing');
+      setIsStarting(false);
     } catch (error) {
       setStatus('blocked');
+      setIsStarting(false);
     }
   }, [setupAudio]);
 
@@ -146,6 +164,7 @@ export function useAmbientAudio(src: string, volume: number) {
   return {
     status,
     muted,
+    isStarting,
     play,
     pause,
     toggleMute,

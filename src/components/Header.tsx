@@ -4,6 +4,7 @@ import { AmbientStatus } from '../hooks/useAmbientAudio';
 export type HeaderProps = {
   status: AmbientStatus;
   muted: boolean;
+  isStarting: boolean;
   onToggleMute: () => void;
   onRetry: () => void;
   title: string;
@@ -20,7 +21,7 @@ const statusLabelMap: Record<AmbientStatus, string> = {
   error: 'Error',
 };
 
-export function Header({ status, muted, onToggleMute, onRetry, title, subtitle, backgroundNote }: HeaderProps) {
+export function Header({ status, muted, isStarting, onToggleMute, onRetry, title, subtitle, backgroundNote }: HeaderProps) {
   const requiresUserStart = status === 'blocked' || status === 'idle';
 
   const buttonLabel = requiresUserStart ? 'Start ambient' : muted ? 'Unmute ambient' : 'Mute ambient';
@@ -63,8 +64,18 @@ export function Header({ status, muted, onToggleMute, onRetry, title, subtitle, 
             type="button"
             onClick={requiresUserStart ? onRetry : onToggleMute}
             className="rounded-full bg-aurora/20 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-aurora/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            aria-busy={requiresUserStart && isStarting}
+            disabled={requiresUserStart && isStarting}
           >
-            {buttonLabel}
+            <span className="flex items-center gap-2">
+              {requiresUserStart && isStarting ? (
+                <span
+                  className="h-4 w-4 animate-spin rounded-full border-2 border-white/60 border-t-transparent"
+                  aria-hidden
+                />
+              ) : null}
+              <span>{requiresUserStart && isStarting ? 'Starting…' : buttonLabel}</span>
+            </span>
           </button>
           <span className="text-xs uppercase tracking-[0.3em] text-starlight/50">
             {requiresUserStart ? `${statusLabelMap[status]} · Tap to enable` : statusLabelMap[status]}
