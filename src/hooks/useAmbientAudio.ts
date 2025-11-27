@@ -5,6 +5,8 @@ export type AmbientStatus = 'idle' | 'playing' | 'muted' | 'stopped' | 'blocked'
 export function useAmbientAudio(src: string, volume: number) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
+  const warmupHandleRef = useRef<number | null>(null);
+  const warmupScheduledRef = useRef(false);
   const [status, setStatus] = useState<AmbientStatus>('idle');
   const [muted, setMuted] = useState(false);
 
@@ -98,6 +100,48 @@ export function useAmbientAudio(src: string, volume: number) {
       setStatus('blocked');
     }
   }, [setupAudio]);
+
+  useEffect(() => {
+    warmupScheduledRef.current = false;
+
+    const warmup = () => {
+      if (warmupScheduledRef.current) return;
+      warmupScheduledRef.current = true;
+
+      warmupHandleRef.current = window.setTimeout(() => {
+        const audio = setupAudio();
+        if (!audio) return;
+
+        if (!audio.paused || audio.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+          return;
+        }
+
+        audio.preload = 'auto';
+        try {
+          audio.load();
+        } catch {
+          // Swallow load errors; user interaction will retry play.
+        }
+      }, 1800);
+    };
+
+    if (typeof window !== 'undefined') {
+      if ('requestIdleCallback' in window) {
+        (window as typeof window & { requestIdleCallback: (cb: IdleRequestCallback) => number }).requestIdleCallback(
+          warmup,
+          { timeout: 3000 },
+        );
+      } else {
+        warmup();
+      }
+    }
+
+    return () => {
+      if (warmupHandleRef.current !== null) {
+        window.clearTimeout(warmupHandleRef.current);
+      }
+    };
+  }, [setupAudio, src]);
 
   return {
     status,
