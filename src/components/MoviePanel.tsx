@@ -6,11 +6,12 @@ export type MoviePanelProps = {
   movie: Movie | null;
   isOpen: boolean;
   onClose: () => void;
+  onShare: (movie: Movie) => void;
 };
 
 const DESKTOP_QUERY = '(min-width: 768px)';
 
-export function MoviePanel({ movie, isOpen, onClose }: MoviePanelProps) {
+export function MoviePanel({ movie, isOpen, onClose, onShare }: MoviePanelProps) {
   const [isDesktop, setIsDesktop] = useState(() =>
     typeof window === 'undefined' ? false : window.matchMedia(DESKTOP_QUERY).matches,
   );
@@ -100,9 +101,9 @@ export function MoviePanel({ movie, isOpen, onClose }: MoviePanelProps) {
                 type="button"
                 aria-label="Close"
                 onClick={onClose}
-                className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/70 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white shadow-lg transition hover:border-aurum/80 hover:bg-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
-                <span className="relative block h-4 w-4">
+                <span className="relative block h-5 w-5">
                   <span className="absolute inset-x-0 top-1/2 block h-[2px] -translate-y-1/2 rotate-45 bg-current" />
                   <span className="absolute inset-x-0 top-1/2 block h-[2px] -translate-y-1/2 -rotate-45 bg-current" />
                 </span>
@@ -144,10 +145,10 @@ export function MoviePanel({ movie, isOpen, onClose }: MoviePanelProps) {
                   </a>
                   <button
                     type="button"
-                    onClick={onClose}
-                    className="rounded-full border border-white/10 px-4 py-2 font-medium text-white transition hover:border-aurum/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    onClick={() => onShare(movie)}
+                    className="rounded-full border border-white/10 px-4 py-2 font-medium text-white transition hover:border-aurum/60 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
-                    Close
+                    Share
                   </button>
                 </div>
               </div>

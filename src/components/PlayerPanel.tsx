@@ -77,7 +77,7 @@ export function PlayerPanel({ track, isOpen, onClose, onShare }: PlayerPanelProp
                 onClick={() => onShare(track)}
                 className="rounded-full border border-white/10 px-4 py-2 font-medium transition hover:border-aurora/60 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
-                Copy share link
+                Share
               </button>
               <span className="text-xs text-starlight/60">
                 Press Esc to close · Background music pauses while a track is open.
