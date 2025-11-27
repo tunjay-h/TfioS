@@ -39,6 +39,7 @@ export default function App() {
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
   const toastTimeout = useRef<number | null>(null);
   const lastNonTrackRoute = useRef<Route>({ type: 'home' });
+  const quotesSectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -238,17 +239,25 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isPanelOpen, play, status]);
 
-  const handleShare = useCallback(
-    async (track: Track) => {
-      const shareUrl = buildShareUrl({ type: 'track', id: track.id });
+  const scrollQuotesIntoView = useCallback(() => {
+    const section = quotesSectionRef.current;
+    if (!section) return;
+    section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, []);
+
+  useEffect(() => {
+    if (forcedQuoteId) {
+      scrollQuotesIntoView();
+    }
+  }, [forcedQuoteId, scrollQuotesIntoView]);
+
+  const shareContent = useCallback(
+    async ({ route, title, text }: { route: Route; title: string; text: string }) => {
+      const shareUrl = buildShareUrl(route);
 
       if (navigator.share) {
         try {
-          await navigator.share({
-            title: `${track.title} — TfioS`,
-            text: `Listen to ${track.title} by ${track.artist} on TfioS`,
-            url: shareUrl,
-          });
+          await navigator.share({ title, text, url: shareUrl });
           showToast('Shared successfully.');
           return;
         } catch (error) {
@@ -271,6 +280,36 @@ export default function App() {
       showToast('Sharing is unavailable in this browser.');
     },
     [showToast],
+  );
+
+  const handleTrackShare = useCallback(
+    (track: Track) =>
+      shareContent({
+        route: { type: 'track', id: track.id },
+        title: `${track.title} — TfioS`,
+        text: `Listen to ${track.title} by ${track.artist} on TfioS`,
+      }),
+    [shareContent],
+  );
+
+  const handleMovieShare = useCallback(
+    (movie: Movie) =>
+      shareContent({
+        route: { type: 'movie', id: movie.id },
+        title: `${movie.title} — TfioS`,
+        text: `Explore ${movie.title} (${movie.year}) on TfioS`,
+      }),
+    [shareContent],
+  );
+
+  const handleQuoteShare = useCallback(
+    (quote: Quote) =>
+      shareContent({
+        route: { type: 'quote', id: quote.id },
+        title: `${quote.author} — TfioS`,
+        text: `“${quote.text}” — ${quote.author}`,
+      }),
+    [shareContent],
   );
 
   const sortedTracks = useMemo(() => tracks, [tracks]);
@@ -303,10 +342,17 @@ export default function App() {
           onQuoteChange={handleQuoteChange}
           autoAdvancePaused={quoteAutoPaused}
           animationsEnabled={animationsEnabled}
+          onShare={handleQuoteShare}
+          sectionRef={quotesSectionRef}
         />
       </main>
-      <PlayerPanel track={selectedTrack} isOpen={isPanelOpen} onClose={closePanel} onShare={handleShare} />
-      <MoviePanel movie={selectedMovie} isOpen={isMoviePanelOpen} onClose={closeMoviePanel} />
+      <PlayerPanel track={selectedTrack} isOpen={isPanelOpen} onClose={closePanel} onShare={handleTrackShare} />
+      <MoviePanel
+        movie={selectedMovie}
+        isOpen={isMoviePanelOpen}
+        onClose={closeMoviePanel}
+        onShare={handleMovieShare}
+      />
       <Toast message={toast} />
     </div>
   );

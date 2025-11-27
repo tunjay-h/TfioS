@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Quote } from '../types';
 
@@ -8,6 +9,8 @@ export type QuotesCarouselProps = {
   onQuoteChange: (quote: Quote, source: 'auto' | 'user') => void;
   autoAdvancePaused: boolean;
   animationsEnabled: boolean;
+  onShare: (quote: Quote) => void;
+  sectionRef?: React.Ref<HTMLDivElement>;
 };
 
 const AUTO_ADVANCE_MS = 9000;
@@ -18,12 +21,30 @@ export function QuotesCarousel({
   onQuoteChange,
   autoAdvancePaused,
   animationsEnabled,
+  onShare,
+  sectionRef,
 }: QuotesCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasEnteredView, setHasEnteredView] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const forwardedSectionRef = sectionRef;
   const pointerStart = useRef<number | null>(null);
   const shouldReduceMotion = !animationsEnabled;
+
+  const handleSectionRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      containerRef.current = node;
+      if (!forwardedSectionRef) {
+        return;
+      }
+      if (typeof forwardedSectionRef === 'function') {
+        forwardedSectionRef(node);
+        return;
+      }
+      forwardedSectionRef.current = node;
+    },
+    [forwardedSectionRef],
+  );
 
   const goToIndex = useCallback(
     (nextIndex: number, source: 'auto' | 'user') => {
@@ -110,7 +131,7 @@ export function QuotesCarousel({
   const fadeDuration = shouldReduceMotion ? 0.1 : 0.7;
 
   return (
-    <section ref={containerRef} className="relative z-10" aria-labelledby="quotes-heading">
+    <section ref={handleSectionRef} className="relative z-10" aria-labelledby="quotes-heading">
       <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <h2 id="quotes-heading" className="font-display text-2xl font-semibold text-white">
           Words carried by stardust
@@ -140,13 +161,20 @@ export function QuotesCarousel({
           </motion.div>
         </AnimatePresence>
         <div className="pointer-events-none absolute inset-0 rounded-3xl border border-white/5" />
-        <div className="mt-8 flex items-center justify-center gap-4">
+        <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <button
             type="button"
             onClick={handlePrev}
             className="rounded-full border border-white/10 px-4 py-2 text-sm text-white transition hover:border-aurum/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             Prev
+          </button>
+          <button
+            type="button"
+            onClick={() => onShare(activeQuote)}
+            className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:border-aurum/70 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            Share
           </button>
           <button
             type="button"
