@@ -161,7 +161,7 @@ export function QuotesCarousel({
           </motion.div>
         </AnimatePresence>
         <div className="pointer-events-none absolute inset-0 rounded-3xl border border-white/5" />
-        <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <div className="mt-8 flex items-center justify-center gap-4 sm:flex-row">
           <button
             type="button"
             onClick={handlePrev}
