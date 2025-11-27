@@ -3,14 +3,32 @@
     "title": "TfioS — Little, Beautiful Collection",
     "description": "A small constellation of songs that mean a lot.",
     "bgTrack": {
-      "title": "Finding the Rose",
-      "artist": "Hans Zimmer & Richard Harvey",
-      "note": "From the soundtrack of \"The Little Prince\"",
-      "src": "/finding-the-rose.mp3",
+      "title": "Your Lie in April",
+      "artist": "Masaru Yokoyama",
+      "note": "From the soundtrack of \"Your Lie in April\"",
+      "src": "/your-lie-in-april.mp3",
       "volume": 0.35
     }
   },
   "tracks": [
+    {
+      "id": "your-lie-in-april",
+      "title": "Your Lie in April",
+      "artist": "Masaru Yokoyama",
+      "year": 2015,
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b2738a76d26762faf3834de9674c",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/H5ohDQ-umHM?si=Q4cLfYgcYaM2fcPY",
+      "openUrl": "https://www.youtube.com/results?search_query=Shigatsu+wa+Kimi+no+Uso+OST"
+    },
+    {
+      "id": "the-little-prince",
+      "title": "Finding the Rose",
+      "artist": "Hans Zimmer / Richard Harvey",
+      "year": 2015,
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273e34554d0e8f38e2ac0d0a369",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/osVjYCPvRCM?si=1nG6PLRY0Km13mqS",
+      "openUrl": "https://www.youtube.com/results?search_query=finding+the+rose+the+little+prince"
+    },
     {
       "id": "kodaline-all-i-want",
       "title": "All I Want",
@@ -28,6 +46,15 @@
       "coverUrl": "https://i.scdn.co/image/ab67616d0000b273f33a9f529c12f79b116eb218",
       "embedUrl": "https://www.youtube-nocookie.com/embed/gS9o1FAszdk?si=9v-SglAEmLNwJD-R",
       "openUrl": "https://www.youtube.com/results?search_query=The+Script+The+Man+Who+Can%27t+Be+Moved"
+    },
+    {
+      "id": "song-of-the-sea",
+      "title": "Song of the Sea",
+      "artist": "Nolwenn Leroy",
+      "year": 2014,
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b27394563ab50f27c9026903a53c",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/J5P2-9YY7qU?si=iU82cvxU6bNcwwJS",
+      "openUrl": "https://www.youtube.com/results?search_query=Song+of+the+Sea+Lullaby"
     },
     {
       "id": "onerepublic-lets-hurt-tonight",
@@ -55,15 +82,6 @@
       "coverUrl": "https://i.scdn.co/image/ab67616d0000b273145e1cf12538f5666511237d",
       "embedUrl": "https://www.youtube-nocookie.com/embed/Tm8LGxTLtQk?si=XLUUZuX2TA4s_8pS",
       "openUrl": "https://www.youtube.com/results?search_query=Linkin+Park+One+More+Light"
-    },
-    {
-      "id": "song-of-the-sea",
-      "title": "Song of the Sea",
-      "artist": "Bruno Coulais / Lisa Hannigan",
-      "year": 2014,
-      "coverUrl": "https://i.scdn.co/image/ab67616d0000b27394563ab50f27c9026903a53c",
-      "embedUrl": "https://www.youtube-nocookie.com/embed/IFlioLWmE7k?si=4ouM3faHaf1SqCx7",
-      "openUrl": "https://www.youtube.com/results?search_query=Song+of+the+Sea+Lisa+Hannigan"
     },
     {
       "id": "the-script-no-good-in-goodbye",
