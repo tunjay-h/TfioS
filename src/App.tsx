@@ -97,7 +97,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (status === 'blocked') {
+    if (status === 'blocked' || status === 'idle') {
       showToast('Tap to start ambient music.');
     } else if (status === 'error') {
       showToast('Ambient score failed to load.');

@@ -21,9 +21,9 @@ const statusLabelMap: Record<AmbientStatus, string> = {
 };
 
 export function Header({ status, muted, onToggleMute, onRetry, title, subtitle, backgroundNote }: HeaderProps) {
-  const isBlocked = status === 'blocked';
+  const requiresUserStart = status === 'blocked' || status === 'idle';
 
-  const buttonLabel = isBlocked ? 'Start ambient' : muted ? 'Unmute ambient' : 'Mute ambient';
+  const buttonLabel = requiresUserStart ? 'Start ambient' : muted ? 'Unmute ambient' : 'Mute ambient';
 
   return (
     <header className="relative z-10 flex flex-col gap-8 py-8 text-starlight md:flex-row md:items-start md:justify-between">
@@ -61,16 +61,16 @@ export function Header({ status, muted, onToggleMute, onRetry, title, subtitle, 
         <div className="flex items-center gap-3 pt-2">
           <button
             type="button"
-            onClick={isBlocked ? onRetry : onToggleMute}
+            onClick={requiresUserStart ? onRetry : onToggleMute}
             className="rounded-full bg-aurora/20 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-aurora/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             {buttonLabel}
           </button>
           <span className="text-xs uppercase tracking-[0.3em] text-starlight/50">
-            {isBlocked ? 'Blocked · Tap to enable' : statusLabelMap[status]}
+            {requiresUserStart ? `${statusLabelMap[status]} · Tap to enable` : statusLabelMap[status]}
           </span>
         </div>
-        {isBlocked ? (
+        {requiresUserStart ? (
           <button
             type="button"
             className="text-xs text-starlight/70 underline decoration-dotted underline-offset-2 hover:text-white"
