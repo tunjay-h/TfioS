@@ -56,7 +56,7 @@ export function Header({ status, muted, onToggleMute, onRetry, title, subtitle, 
       </div>
       <div className="flex max-w-md flex-col gap-2 rounded-2xl bg-white/5 p-4 text-sm text-starlight/90 backdrop-blur md:-mr-8">
         <p className="font-medium uppercase tracking-[0.2em] text-starlight/70">Ambient Score</p>
-        <p className="text-base text-white">Finding the Rose · Hans Zimmer &amp; Richard Harvey</p>
+        <p className="text-base text-white">Your Lie in April · Masaru Yokoyama</p>
         <p className="text-xs text-starlight/60">{backgroundNote}</p>
         <div className="flex items-center gap-3 pt-2">
           <button
