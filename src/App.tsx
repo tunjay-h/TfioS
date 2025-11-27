@@ -24,7 +24,7 @@ export default function App() {
   const { meta, tracks } = playlist;
   const movies = moviesCollection;
   const quotes = quotesCollection;
-  const { status, muted, pause, play, toggleMute, manuallyUnblock } = useAmbientAudio(
+  const { status, muted, isStarting, pause, play, toggleMute, manuallyUnblock } = useAmbientAudio(
     meta.bgTrack.src,
     meta.bgTrack.volume,
   );
@@ -97,7 +97,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (status === 'blocked') {
+    if (status === 'blocked' || status === 'idle') {
       showToast('Tap to start ambient music.');
     } else if (status === 'error') {
       showToast('Ambient score failed to load.');
@@ -328,6 +328,7 @@ export default function App() {
         <Header
           status={status}
           muted={muted}
+          isStarting={isStarting}
           onToggleMute={toggleMute}
           onRetry={manuallyUnblock}
           title={meta.title}

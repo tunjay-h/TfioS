@@ -232,12 +232,19 @@ function Galaxy({
     }
 
     let program: Program | null = null;
+    let mesh: Mesh | null = null;
+    let animateId: number | null = null;
+    let lastRenderTime = 0;
 
     function resize() {
       const scale = 1;
       renderer.setSize(ctn.offsetWidth * scale, ctn.offsetHeight * scale);
       if (program) {
         program.uniforms.uResolution.value = new Color(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height);
+        if (mesh && disableAnimation) {
+          renderScene(lastRenderTime);
+          renderer.render({ scene: mesh });
+        }
       }
     }
 
@@ -270,14 +277,14 @@ function Galaxy({
       },
     });
 
-    const mesh = new Mesh(gl, { geometry, program });
-    let animateId: number;
+    mesh = new Mesh(gl, { geometry, program });
 
-    function update(t: number) {
-      animateId = requestAnimationFrame(update);
+    function renderScene(time: number) {
+      lastRenderTime = time;
+
       if (!disableAnimation && program) {
-        program.uniforms.uTime.value = t * 0.001;
-        program.uniforms.uStarSpeed.value = (t * 0.001 * starSpeed) / 10.0;
+        program.uniforms.uTime.value = time * 0.001;
+        program.uniforms.uStarSpeed.value = (time * 0.001 * starSpeed) / 10.0;
       }
 
       const lerpFactor = 0.05;
@@ -294,7 +301,28 @@ function Galaxy({
       renderer.render({ scene: mesh });
     }
 
-    animateId = requestAnimationFrame(update);
+    function startAnimation() {
+      if (animateId !== null) return;
+
+      const update = (time: number) => {
+        renderScene(time);
+        animateId = requestAnimationFrame(update);
+      };
+
+      animateId = requestAnimationFrame(update);
+    }
+
+    function stopAnimation() {
+      if (animateId !== null) {
+        cancelAnimationFrame(animateId);
+        animateId = null;
+      }
+    }
+
+    renderScene(0);
+    if (!disableAnimation) {
+      startAnimation();
+    }
     ctn.appendChild(gl.canvas);
 
     function handleMouseMove(event: MouseEvent) {
@@ -315,7 +343,7 @@ function Galaxy({
     }
 
     return () => {
-      cancelAnimationFrame(animateId);
+      stopAnimation();
       window.removeEventListener('resize', resize);
       if (mouseInteraction) {
         ctn.removeEventListener('mousemove', handleMouseMove);
