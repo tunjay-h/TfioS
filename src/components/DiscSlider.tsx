@@ -51,7 +51,7 @@ export function DiscSlider({ tracks, activeTrackId, onSelect }: DiscSliderProps)
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-semibold uppercase tracking-[0.35em] text-white/80 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="text-sm font-semibold uppercase tracking-[0.35em] text-white/80 transition hover:text-white focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
               >
                 {link.label}
               </a>
@@ -77,7 +77,7 @@ export function DiscSlider({ tracks, activeTrackId, onSelect }: DiscSliderProps)
                 data-track-index={index}
                 onClick={() => onSelect(track)}
                 onKeyDown={(event) => handleKeyDown(event, index)}
-                className={`group relative flex h-[190px] w-[190px] items-center justify-center overflow-hidden rounded-full border border-white/15 p-6 text-white transition focus-visible:ring-4 focus-visible:ring-aurum/40 sm:h-[200px] sm:w-[200px] md:h-[220px] md:w-[220px] ${
+                className={`group relative flex h-[190px] w-[190px] items-center justify-center overflow-hidden rounded-full border border-white/15 p-6 text-white transition focus:outline-none focus-visible:ring-4 focus-visible:ring-aurum/40 sm:h-[200px] sm:w-[200px] md:h-[220px] md:w-[220px] ${
                   isActive
                     ? 'scale-105 border-aurum/70 shadow-[0_0_40px_rgba(215,184,102,0.45)]'
                     : 'hover:scale-[1.02] hover:border-aurum/40'

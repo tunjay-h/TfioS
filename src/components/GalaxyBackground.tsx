@@ -220,8 +220,20 @@ function Galaxy({
     const renderer = new Renderer({
       alpha: transparent,
       premultipliedAlpha: false,
+      preserveDrawingBuffer: true,
     });
+    const dpr = Math.min(window.devicePixelRatio ?? 1, 2);
+    (renderer as Renderer & { dpr: number }).dpr = dpr;
     const { gl } = renderer;
+
+    const canvas = gl.canvas;
+    canvas.style.position = 'absolute';
+    canvas.style.inset = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.display = 'block';
+    canvas.style.backgroundColor = transparent ? '#050714' : '#000';
+    canvas.style.willChange = 'transform, opacity';
 
     if (transparent) {
       gl.enable(gl.BLEND);

@@ -327,28 +327,33 @@ export default function App() {
         {isAbout ? (
           <AboutPage animationsEnabled={animationsEnabled} />
         ) : (
-          <main className="mx-auto flex max-w-7xl flex-col gap-12 px-4 pb-32 pt-6 sm:px-8 lg:px-10">
-            <Header
-              status={status}
-              muted={muted}
-              isStarting={isStarting}
-              onToggleMute={toggleMute}
-              onRetry={manuallyUnblock}
-              title={meta.title}
-              subtitle={meta.description}
-              backgroundNote={meta.bgTrack.note}
-            />
-            <DiscSlider tracks={sortedTracks} activeTrackId={selectedTrack?.id ?? null} onSelect={selectTrack} />
-            <MovieSlider movies={movies} activeMovieId={selectedMovie?.id ?? null} onSelect={handleMovieSelect} />
-            <QuotesCarousel
-              quotes={quotes}
-              controlledQuoteId={forcedQuoteId}
-              onQuoteChange={handleQuoteChange}
-              autoAdvancePaused={quoteAutoPaused}
-              animationsEnabled={animationsEnabled}
-              onShare={handleQuoteShare}
-              sectionRef={quotesSectionRef}
-            />
+          <main className="mx-auto flex max-w-7xl flex-col px-4 pb-32 pt-6 sm:px-8 lg:px-10">
+            <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-black/25 p-6 shadow-[0_20px_80px_rgba(5,7,20,0.75)] backdrop-blur-xl sm:p-8">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-black/40" />
+              <div className="relative flex flex-col gap-12">
+                <Header
+                  status={status}
+                  muted={muted}
+                  isStarting={isStarting}
+                  onToggleMute={toggleMute}
+                  onRetry={manuallyUnblock}
+                  title={meta.title}
+                  subtitle={meta.description}
+                  backgroundNote={meta.bgTrack.note}
+                />
+                <DiscSlider tracks={sortedTracks} activeTrackId={selectedTrack?.id ?? null} onSelect={selectTrack} />
+                <MovieSlider movies={movies} activeMovieId={selectedMovie?.id ?? null} onSelect={handleMovieSelect} />
+                <QuotesCarousel
+                  quotes={quotes}
+                  controlledQuoteId={forcedQuoteId}
+                  onQuoteChange={handleQuoteChange}
+                  autoAdvancePaused={quoteAutoPaused}
+                  animationsEnabled={animationsEnabled}
+                  onShare={handleQuoteShare}
+                  sectionRef={quotesSectionRef}
+                />
+              </div>
+            </div>
           </main>
         )}
       </div>
