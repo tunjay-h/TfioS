@@ -4,10 +4,13 @@
 
 :root {
   color-scheme: dark;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
 }
 
 body {
-  @apply bg-midnight text-starlight antialiased;
+  font-family: var(--font-body);
+  @apply bg-midnight text-starlight antialiased font-body;
 }
 
 ::-webkit-scrollbar {

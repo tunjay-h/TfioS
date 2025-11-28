@@ -47,22 +47,16 @@ export function AboutPage({ animationsEnabled }: AboutPageProps) {
 
   return (
     <div className="relative z-10">
-      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-        <div className="mb-10 flex justify-end">
-          <span className="rounded-full border border-white/10 bg-black/20 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-white/60 backdrop-blur">
-            About
-          </span>
-        </div>
-
-        <div className="mx-auto max-w-prose space-y-10 leading-relaxed text-white/90">
-          <header className="space-y-3 text-center">
-            <h1 className="text-4xl font-semibold text-white sm:text-5xl">About TfioS</h1>
-            <p className="text-lg text-white/70">The Future is on Stars · The Future in Our Stars</p>
+      <div className="mx-auto max-w-6xl px-6 pt-20 pb-24 sm:px-10 sm:pt-24 sm:pb-28 lg:px-12">
+        <div className="mx-auto max-w-5xl space-y-12 leading-relaxed text-white/90">
+          <header className="space-y-4 text-center">
+            <h1 className="font-display text-5xl font-semibold tracking-tight text-white sm:text-6xl">About TfioS</h1>
+            <p className="text-lg text-starlight/80 sm:text-xl">The Future is on Stars · The Future in Our Stars</p>
           </header>
 
-          <section className={`${glassCardClass} space-y-6 px-6 py-8 sm:px-8 sm:py-10`}>
+          <section className={`${glassCardClass} mx-auto max-w-4xl space-y-6 px-8 py-10 sm:px-10 sm:py-12`}>
             <p className="text-xs uppercase tracking-[0.35em] text-white/60">A letter from us</p>
-            <div className="space-y-5 text-lg">
+            <div className="mx-auto max-w-[72ch] space-y-5 text-lg leading-relaxed sm:text-xl sm:leading-relaxed">
               <p>
                 <strong>TfioS</strong> is a small constellation we built for the things that quietly stayed.
               </p>
@@ -113,14 +107,14 @@ export function AboutPage({ animationsEnabled }: AboutPageProps) {
 
           <div className="border-t border-white/10" />
 
-          <section className="space-y-6">
+          <section className="mx-auto max-w-5xl space-y-8">
             <div className="space-y-2">
-              <h2 className="text-3xl font-semibold text-white">Where TfioS began</h2>
+              <h2 className="font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">Where TfioS began</h2>
               <p className="text-white/70">The origin note that became our small constellation.</p>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-2 md:items-start">
-              <div className="space-y-4 text-white/80">
+            <div className="grid gap-10 md:grid-cols-2 md:items-start">
+              <div className="space-y-5 text-lg leading-relaxed text-white/80 md:pr-6">
                 <p>
                   About nine years ago, traveling with my family, we left a small mark on a wall: <strong>TfioS</strong>.
                 </p>
@@ -135,12 +129,12 @@ export function AboutPage({ animationsEnabled }: AboutPageProps) {
                 </p>
               </div>
 
-              <div className="space-y-3">
-                <div className="grid gap-4 md:grid-cols-1">
+              <div className="space-y-4 md:space-y-5 md:pl-4">
+                <div className="grid gap-5 md:gap-6">
                   <button
                     type="button"
                     onClick={() => setLightboxImage(photoStack[0])}
-                    className={`${polaroidClass} ${transitionDuration} relative block overflow-hidden border-white/15 bg-gradient-to-b from-white/5 via-white/5 to-black/40 p-3 text-left shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:-rotate-1`}
+                    className={`${polaroidClass} ${transitionDuration} relative block overflow-hidden border-white/15 bg-gradient-to-b from-white/5 via-white/5 to-black/40 p-4 text-left shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:-rotate-2`}
                   >
                     <div className="aspect-[4/3] overflow-hidden rounded-xl bg-black/30">
                       <img
@@ -155,7 +149,7 @@ export function AboutPage({ animationsEnabled }: AboutPageProps) {
                   <button
                     type="button"
                     onClick={() => setLightboxImage(photoStack[1])}
-                    className={`${polaroidClass} ${transitionDuration} relative block overflow-hidden border-white/15 bg-gradient-to-b from-white/5 via-white/5 to-black/40 p-3 text-left shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:rotate-1`}
+                    className={`${polaroidClass} ${transitionDuration} relative block overflow-hidden border-white/15 bg-gradient-to-b from-white/5 via-white/5 to-black/40 p-4 text-left shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:rotate-1`}
                   >
                     <div className="aspect-[4/3] overflow-hidden rounded-xl bg-black/30">
                       <img
