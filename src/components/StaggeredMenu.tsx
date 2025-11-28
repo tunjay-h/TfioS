@@ -73,7 +73,7 @@ export function StaggeredMenu({
         aria-controls="tfios-menu-panel"
         aria-label={open ? 'Close menu' : 'Open menu'}
         onClick={() => setOpen((prev) => !prev)}
-        className="group inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-black/40 p-0 text-white/90 backdrop-blur focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
+        className="group inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-black/40 p-0 text-white/90 backdrop-blur focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
       >
         <span className="relative flex h-5 w-6 items-center justify-center" aria-hidden>
           <span
@@ -131,7 +131,7 @@ export function StaggeredMenu({
                     type="button"
                     onClick={() => setOpen(false)}
                     aria-label="Close menu"
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/70 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/70 transition hover:text-white focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
                   >
                     <span className="relative block h-4 w-4">
                       <span className="absolute inset-x-0 top-1/2 block h-[2px] -translate-y-1/2 rotate-45 bg-current" />
@@ -188,7 +188,7 @@ export function StaggeredMenu({
                         href={item.href}
                         target={item.external ? '_blank' : undefined}
                         rel={item.external ? 'noreferrer noopener' : undefined}
-                        className="group flex items-center justify-between gap-6 text-[clamp(2rem,5vw,3.5rem)] font-semibold uppercase tracking-tight text-white/80 transition hover:text-white"
+                        className="group flex items-center justify-between gap-6 text-[clamp(2rem,5vw,3.5rem)] font-semibold uppercase tracking-tight text-white/80 transition hover:text-white focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
                         onClick={(event) => {
                           if (!item.external) {
                             if (item.label === 'Home' && onHome) {
@@ -216,7 +216,7 @@ export function StaggeredMenu({
                       onClick={() => {
                         onToggleAnimations();
                       }}
-                      className="rounded-full border border-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-white/80 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
+                      className="rounded-full border border-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-white/80 transition hover:text-white focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
                     >
                       {animationsEnabled ? 'On' : 'Off'}
                     </button>

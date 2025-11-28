@@ -145,7 +145,7 @@ export function QuotesCarousel({
         onKeyDown={handleKeyDown}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
-        className="group relative min-h-[240px] overflow-hidden rounded-3xl border border-white/10 bg-black/30 p-8 text-center text-white backdrop-blur focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-aurora/70"
+        className="group relative min-h-[240px] overflow-hidden rounded-3xl border border-white/10 bg-black/30 p-8 text-center text-white backdrop-blur focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-aurora/70"
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -165,21 +165,21 @@ export function QuotesCarousel({
           <button
             type="button"
             onClick={handlePrev}
-            className="rounded-full border border-white/10 px-4 py-2 text-sm text-white transition hover:border-aurum/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
+            className="rounded-full border border-white/10 px-4 py-2 text-sm text-white transition hover:border-aurum/70 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
           >
             Prev
           </button>
           <button
             type="button"
             onClick={() => onShare(activeQuote)}
-            className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:border-aurum/70 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
+            className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:border-aurum/70 hover:text-white focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
           >
             Share
           </button>
           <button
             type="button"
             onClick={handleNext}
-            className="rounded-full border border-white/10 px-4 py-2 text-sm text-white transition hover:border-aurum/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
+            className="rounded-full border border-white/10 px-4 py-2 text-sm text-white transition hover:border-aurum/70 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
           >
             Next
           </button>
@@ -190,7 +190,7 @@ export function QuotesCarousel({
               key={quote.id}
               type="button"
               aria-label={`Show quote ${index + 1}`}
-              className={`h-2.5 w-2.5 rounded-full transition ${index === currentIndex ? 'bg-aurum' : 'bg-white/30 hover:bg-aurum/60'}`}
+              className={`h-2.5 w-2.5 rounded-full transition focus:outline-none focus-visible:ring-2 focus-visible:ring-aurora/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900/80 ${index === currentIndex ? 'bg-aurum' : 'bg-white/30 hover:bg-aurum/60'}`}
               onClick={() => goToIndex(index, 'user')}
             />
           ))}
