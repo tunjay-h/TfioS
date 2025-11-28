@@ -67,7 +67,7 @@ export function MoviePanel({ movie, isOpen, onClose, onShare }: MoviePanelProps)
           <motion.button
             type="button"
             aria-label="Close movie details"
-            className="absolute inset-0 bg-black/60"
+            className="absolute inset-0 bg-black/60 gpu-layer"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -84,7 +84,7 @@ export function MoviePanel({ movie, isOpen, onClose, onShare }: MoviePanelProps)
             role="dialog"
             aria-modal="true"
             aria-labelledby="movie-panel-title"
-            className="relative z-10 flex w-full max-w-3xl flex-col overflow-hidden rounded-t-3xl border border-white/10 bg-slate-900/95 text-white shadow-2xl backdrop-blur-md md:max-h-[85vh] md:flex-row md:rounded-3xl"
+            className="gpu-layer relative z-10 flex w-full max-w-3xl flex-col overflow-hidden rounded-t-3xl border border-white/10 bg-slate-900/95 text-white shadow-2xl backdrop-blur-md md:max-h-[85vh] md:flex-row md:rounded-3xl"
             style={{ height: isDesktop ? 'auto' : '85vh' }}
           >
             <div className="relative h-64 w-full flex-shrink-0 overflow-hidden md:h-auto md:w-80">

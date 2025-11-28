@@ -384,7 +384,7 @@ export function GalaxyBackground({ animationsEnabled }: GalaxyBackgroundProps) {
   const disableAnimation = !animationsEnabled;
 
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+    <div className="pointer-events-none absolute inset-0 overflow-hidden gpu-layer" aria-hidden>
       <div className="absolute inset-0 bg-gradient-to-b from-[#050714] via-[#080C18] to-[#020309]" />
       <Galaxy
         className="absolute inset-0"

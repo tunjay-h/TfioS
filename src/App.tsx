@@ -313,7 +313,7 @@ export default function App() {
   const isAbout = currentRoute.type === 'about';
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-midnight">
+    <div className="relative min-h-screen overflow-hidden bg-midnight isolate">
       <GalaxyBackground animationsEnabled={animationsEnabled} />
       <div className="relative z-10">
         <div className="flex justify-end px-4 pt-6 sm:px-8 lg:px-10">
