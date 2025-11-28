@@ -51,7 +51,7 @@ export function DiscSlider({ tracks, activeTrackId, onSelect }: DiscSliderProps)
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-semibold uppercase tracking-[0.35em] text-white/80 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="text-sm font-semibold uppercase tracking-[0.35em] text-white/80 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
               >
                 {link.label}
               </a>

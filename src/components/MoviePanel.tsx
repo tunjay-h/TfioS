@@ -101,7 +101,7 @@ export function MoviePanel({ movie, isOpen, onClose, onShare }: MoviePanelProps)
                 type="button"
                 aria-label="Close"
                 onClick={onClose}
-                className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white shadow-lg transition hover:border-aurum/80 hover:bg-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-black/60 text-white shadow-lg transition hover:border-aurum/80 hover:bg-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
               >
                 <span className="relative block h-5 w-5">
                   <span className="absolute inset-x-0 top-1/2 block h-[2px] -translate-y-1/2 rotate-45 bg-current" />
@@ -139,14 +139,14 @@ export function MoviePanel({ movie, isOpen, onClose, onShare }: MoviePanelProps)
                     href={movie.imdbUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-full border border-white/20 px-4 py-2 font-medium text-white transition hover:border-aurum/70 hover:text-aurum focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    className="rounded-full border border-white/20 px-4 py-2 font-medium text-white transition hover:border-aurum/70 hover:text-aurum focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
                   >
                     View on IMDb
                   </a>
                   <button
                     type="button"
                     onClick={() => onShare(movie)}
-                    className="rounded-full border border-white/10 px-4 py-2 font-medium text-white transition hover:border-aurum/60 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    className="rounded-full border border-white/10 px-4 py-2 font-medium text-white transition hover:border-aurum/60 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
                   >
                     Share
                   </button>

@@ -63,7 +63,7 @@ export function Header({ status, muted, isStarting, onToggleMute, onRetry, title
           <button
             type="button"
             onClick={requiresUserStart ? onRetry : onToggleMute}
-            className="rounded-full bg-aurora/20 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-aurora/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="rounded-full bg-aurora/20 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-aurora/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
             aria-busy={requiresUserStart && isStarting}
             disabled={requiresUserStart && isStarting}
           >

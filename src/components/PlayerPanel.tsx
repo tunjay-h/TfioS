@@ -39,7 +39,7 @@ export function PlayerPanel({ track, isOpen, onClose, onShare }: PlayerPanelProp
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-full bg-white/10 px-3 py-1 text-sm text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="rounded-full bg-white/10 px-3 py-1 text-sm text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
               >
                 Close
               </button>
@@ -61,7 +61,7 @@ export function PlayerPanel({ track, isOpen, onClose, onShare }: PlayerPanelProp
                     This track doesn’t have a privacy-friendly embed yet. You can open it in a new tab to keep exploring.
                   </p>
                   <a
-                    className="rounded-full bg-aurora/30 px-5 py-2 text-sm font-semibold text-white transition hover:bg-aurora/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    className="rounded-full bg-aurora/30 px-5 py-2 text-sm font-semibold text-white transition hover:bg-aurora/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
                     href={track.openUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -75,7 +75,7 @@ export function PlayerPanel({ track, isOpen, onClose, onShare }: PlayerPanelProp
               <button
                 type="button"
                 onClick={() => onShare(track)}
-                className="rounded-full border border-white/10 px-4 py-2 font-medium transition hover:border-aurora/60 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="rounded-full border border-white/10 px-4 py-2 font-medium transition hover:border-aurora/60 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
               >
                 Share
               </button>

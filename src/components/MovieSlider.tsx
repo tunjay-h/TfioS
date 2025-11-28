@@ -52,7 +52,7 @@ export function MovieSlider({ movies, activeMovieId, onSelect }: MovieSliderProp
                 aria-selected={isActive}
                 onClick={() => onSelect(movie)}
                 onKeyDown={(event) => handleKeyDown(event, index)}
-                className={`group relative flex w-52 flex-col overflow-hidden rounded-3xl border border-white/10 bg-black/30 text-left text-white shadow-xl transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white ${
+                className={`group relative flex w-52 flex-col overflow-hidden rounded-3xl border border-white/10 bg-black/30 text-left text-white shadow-xl transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-aurora/70 ${
                   isActive ? 'scale-105 border-aurum/60' : 'hover:scale-[1.02] hover:border-aurum/30'
                 }`}
                 aria-label={`${movie.title} (${movie.year})`}
