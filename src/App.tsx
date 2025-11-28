@@ -13,6 +13,7 @@ import { QuotesCarousel } from './components/QuotesCarousel';
 import { StaggeredMenu } from './components/StaggeredMenu';
 import { PlayerPanel } from './components/PlayerPanel';
 import { Toast } from './components/Toast';
+import { AboutPage } from './components/AboutPage';
 import { buildShareUrl, navigateToRoute, parseRouteFromLocation, type Route } from './lib/url';
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion';
 
@@ -37,6 +38,7 @@ export default function App() {
   const [quoteAutoPaused, setQuoteAutoPaused] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
+  const [currentRoute, setCurrentRoute] = useState<Route>({ type: 'home' });
   const toastTimeout = useRef<number | null>(null);
   const lastNonTrackRoute = useRef<Route>({ type: 'home' });
   const quotesSectionRef = useRef<HTMLDivElement | null>(null);
@@ -78,6 +80,50 @@ export default function App() {
     }
   }, []);
 
+  const applyRoute = useCallback(
+    (route: Route, options: { pushState?: boolean } = {}) => {
+      setCurrentRoute(route);
+      rememberRoute(route);
+
+      if (options.pushState) {
+        navigateToRoute(route);
+      }
+
+      if (route.type === 'track') {
+        const track = tracks.find((item) => item.id === route.id) ?? null;
+        setSelectedTrack(track);
+        setIsPanelOpen(Boolean(track));
+        setIsMoviePanelOpen(false);
+        setSelectedMovie(null);
+        pause();
+      } else {
+        setIsPanelOpen(false);
+        setSelectedTrack(null);
+        if (status !== 'blocked') {
+          play().catch(() => undefined);
+        }
+      }
+
+      if (route.type === 'movie') {
+        const movie = movies.find((item) => item.id === route.id) ?? null;
+        setSelectedMovie(movie);
+        setIsMoviePanelOpen(Boolean(movie));
+      } else if (route.type !== 'track') {
+        setIsMoviePanelOpen(false);
+        setSelectedMovie(null);
+      }
+
+      if (route.type === 'quote') {
+        setForcedQuoteId(route.id);
+        setQuoteAutoPaused(true);
+      } else if (route.type !== 'track') {
+        setForcedQuoteId(null);
+        setQuoteAutoPaused(false);
+      }
+    },
+    [movies, pause, play, rememberRoute, status, tracks],
+  );
+
   const showToast = useCallback((message: string) => {
     if (toastTimeout.current) {
       window.clearTimeout(toastTimeout.current);
@@ -106,49 +152,27 @@ export default function App() {
 
   const selectTrack = useCallback(
     (track: Track) => {
-      setSelectedTrack(track);
-      setIsPanelOpen(true);
-      setIsMoviePanelOpen(false);
-      setSelectedMovie(null);
-      pause();
-      navigateToRoute({ type: 'track', id: track.id });
+      applyRoute({ type: 'track', id: track.id }, { pushState: true });
     },
-    [pause],
+    [applyRoute],
   );
 
   const closePanel = useCallback(() => {
-    setIsPanelOpen(false);
-    setSelectedTrack(null);
     const fallbackRoute = lastNonTrackRoute.current ?? { type: 'home' };
-    navigateToRoute(fallbackRoute);
-    if (status !== 'blocked') {
-      play().catch(() => undefined);
-    }
-  }, [play, status]);
+    applyRoute(fallbackRoute, { pushState: true });
+  }, [applyRoute]);
 
   const handleMovieSelect = useCallback(
     (movie: Movie) => {
-      setSelectedMovie(movie);
-      setIsMoviePanelOpen(true);
-      setIsPanelOpen(false);
-      setSelectedTrack(null);
-      if (status !== 'blocked') {
-        play().catch(() => undefined);
-      }
-      const route = { type: 'movie', id: movie.id } as const;
-      rememberRoute(route);
-      navigateToRoute(route);
+      applyRoute({ type: 'movie', id: movie.id }, { pushState: true });
     },
-    [play, rememberRoute, status],
+    [applyRoute],
   );
 
   const closeMoviePanel = useCallback(() => {
-    setIsMoviePanelOpen(false);
-    setSelectedMovie(null);
-    const route = { type: 'home' } as const;
-    rememberRoute(route);
-    navigateToRoute(route);
-  }, [rememberRoute]);
+    const route = lastNonTrackRoute.current ?? { type: 'home' };
+    applyRoute(route, { pushState: true });
+  }, [applyRoute]);
 
   const handleQuoteChange = useCallback(
     (quote: Quote, source: 'auto' | 'user') => {
@@ -156,6 +180,7 @@ export default function App() {
         setForcedQuoteId(null);
         setQuoteAutoPaused(false);
         const route = { type: 'quote', id: quote.id } as const;
+        setCurrentRoute(route);
         rememberRoute(route);
         navigateToRoute(route);
       }
@@ -164,80 +189,47 @@ export default function App() {
   );
 
   const goHome = useCallback(() => {
-    setIsPanelOpen(false);
-    setSelectedTrack(null);
-    setIsMoviePanelOpen(false);
-    setSelectedMovie(null);
-    setForcedQuoteId(null);
-    setQuoteAutoPaused(false);
     const route = { type: 'home' } as const;
-    rememberRoute(route);
-    navigateToRoute(route);
-    if (status !== 'blocked') {
-      play().catch(() => undefined);
-    }
-  }, [play, rememberRoute, status]);
+    applyRoute(route, { pushState: true });
+  }, [applyRoute]);
+
+  const handleNavigate = useCallback(
+    (href: string) => {
+      if (href === '/about') {
+        applyRoute({ type: 'about' }, { pushState: true });
+        return;
+      }
+
+      if (href === '/') {
+        goHome();
+        return;
+      }
+
+      window.location.href = href;
+    },
+    [applyRoute, goHome],
+  );
 
   useEffect(() => {
-    const applyRoute = () => {
+    const syncRouteFromLocation = () => {
       const route = parseRouteFromLocation();
-      rememberRoute(route);
-
-      if (route.type === 'track') {
-        const track = tracks.find((item) => item.id === route.id) ?? null;
-        if (track) {
-          setSelectedTrack(track);
-          setIsPanelOpen(true);
-          setIsMoviePanelOpen(false);
-          setSelectedMovie(null);
-          pause();
-        }
-      } else {
-        setIsPanelOpen(false);
-        setSelectedTrack(null);
-        if (status !== 'blocked') {
-          play().catch(() => undefined);
-        }
-      }
-
-      if (route.type === 'movie') {
-        const movie = movies.find((item) => item.id === route.id) ?? null;
-        setSelectedMovie(movie);
-        setIsMoviePanelOpen(Boolean(movie));
-      } else if (route.type !== 'track') {
-        setIsMoviePanelOpen(false);
-        setSelectedMovie(null);
-      }
-
-      if (route.type === 'quote') {
-        setForcedQuoteId(route.id);
-        setQuoteAutoPaused(true);
-      } else if (route.type !== 'track') {
-        setForcedQuoteId(null);
-        setQuoteAutoPaused(false);
-      }
+      applyRoute(route);
     };
 
-    applyRoute();
-    window.addEventListener('popstate', applyRoute);
-    return () => window.removeEventListener('popstate', applyRoute);
-  }, [movies, pause, play, rememberRoute, status, tracks]);
+    syncRouteFromLocation();
+    window.addEventListener('popstate', syncRouteFromLocation);
+    return () => window.removeEventListener('popstate', syncRouteFromLocation);
+  }, [applyRoute]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isPanelOpen) {
-        setIsPanelOpen(false);
-        setSelectedTrack(null);
-        const fallbackRoute = lastNonTrackRoute.current ?? { type: 'home' };
-        navigateToRoute(fallbackRoute);
-        if (status !== 'blocked') {
-          play().catch(() => undefined);
-        }
+        closePanel();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isPanelOpen, play, status]);
+  }, [closePanel, isPanelOpen]);
 
   const scrollQuotesIntoView = useCallback(() => {
     const section = quotesSectionRef.current;
@@ -313,40 +305,48 @@ export default function App() {
   );
 
   const sortedTracks = useMemo(() => tracks, [tracks]);
+  const isAbout = currentRoute.type === 'about';
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-midnight">
       <GalaxyBackground animationsEnabled={animationsEnabled} />
-      <main className="relative z-10 mx-auto flex max-w-7xl flex-col gap-12 px-4 pb-32 pt-6 sm:px-8 lg:px-10">
-        <div className="flex justify-end">
+      <div className="relative z-10">
+        <div className="flex justify-end px-4 pt-6 sm:px-8 lg:px-10">
           <StaggeredMenu
             onHome={goHome}
+            onNavigate={handleNavigate}
             animationsEnabled={animationsEnabled}
             onToggleAnimations={handleToggleAnimations}
           />
         </div>
-        <Header
-          status={status}
-          muted={muted}
-          isStarting={isStarting}
-          onToggleMute={toggleMute}
-          onRetry={manuallyUnblock}
-          title={meta.title}
-          subtitle={meta.description}
-          backgroundNote={meta.bgTrack.note}
-        />
-        <DiscSlider tracks={sortedTracks} activeTrackId={selectedTrack?.id ?? null} onSelect={selectTrack} />
-        <MovieSlider movies={movies} activeMovieId={selectedMovie?.id ?? null} onSelect={handleMovieSelect} />
-        <QuotesCarousel
-          quotes={quotes}
-          controlledQuoteId={forcedQuoteId}
-          onQuoteChange={handleQuoteChange}
-          autoAdvancePaused={quoteAutoPaused}
-          animationsEnabled={animationsEnabled}
-          onShare={handleQuoteShare}
-          sectionRef={quotesSectionRef}
-        />
-      </main>
+        {isAbout ? (
+          <AboutPage animationsEnabled={animationsEnabled} />
+        ) : (
+          <main className="mx-auto flex max-w-7xl flex-col gap-12 px-4 pb-32 pt-6 sm:px-8 lg:px-10">
+            <Header
+              status={status}
+              muted={muted}
+              isStarting={isStarting}
+              onToggleMute={toggleMute}
+              onRetry={manuallyUnblock}
+              title={meta.title}
+              subtitle={meta.description}
+              backgroundNote={meta.bgTrack.note}
+            />
+            <DiscSlider tracks={sortedTracks} activeTrackId={selectedTrack?.id ?? null} onSelect={selectTrack} />
+            <MovieSlider movies={movies} activeMovieId={selectedMovie?.id ?? null} onSelect={handleMovieSelect} />
+            <QuotesCarousel
+              quotes={quotes}
+              controlledQuoteId={forcedQuoteId}
+              onQuoteChange={handleQuoteChange}
+              autoAdvancePaused={quoteAutoPaused}
+              animationsEnabled={animationsEnabled}
+              onShare={handleQuoteShare}
+              sectionRef={quotesSectionRef}
+            />
+          </main>
+        )}
+      </div>
       <PlayerPanel track={selectedTrack} isOpen={isPanelOpen} onClose={closePanel} onShare={handleTrackShare} />
       <MoviePanel
         movie={selectedMovie}

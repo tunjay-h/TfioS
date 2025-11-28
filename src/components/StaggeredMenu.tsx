@@ -17,6 +17,7 @@ const navItems: NavItem[] = [
 export type StaggeredMenuProps = {
   className?: string;
   onHome?: () => void;
+  onNavigate?: (href: string) => void;
   animationsEnabled: boolean;
   onToggleAnimations: () => void;
 };
@@ -24,6 +25,7 @@ export type StaggeredMenuProps = {
 export function StaggeredMenu({
   className = '',
   onHome,
+  onNavigate,
   animationsEnabled,
   onToggleAnimations,
 }: StaggeredMenuProps) {
@@ -187,9 +189,14 @@ export function StaggeredMenu({
                         rel={item.external ? 'noreferrer noopener' : undefined}
                         className="group flex items-center justify-between gap-6 text-[clamp(2rem,5vw,3.5rem)] font-semibold uppercase tracking-tight text-midnight/80 transition hover:text-midnight"
                         onClick={(event) => {
-                          if (item.label === 'Home' && onHome) {
-                            event.preventDefault();
-                            onHome();
+                          if (!item.external) {
+                            if (item.label === 'Home' && onHome) {
+                              event.preventDefault();
+                              onHome();
+                            } else if (onNavigate) {
+                              event.preventDefault();
+                              onNavigate(item.href);
+                            }
                           }
                           setOpen(false);
                         }}
