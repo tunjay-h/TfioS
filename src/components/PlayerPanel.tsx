@@ -12,7 +12,7 @@ export function PlayerPanel({ track, isOpen, onClose, onShare }: PlayerPanelProp
   return (
     <AnimatePresence>
       {isOpen && track ? (
-        <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 backdrop-blur-sm">
+        <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 backdrop-blur-sm gpu-layer">
           <button
             aria-label="Close player"
             className="absolute inset-0 h-full w-full cursor-default"
@@ -23,7 +23,7 @@ export function PlayerPanel({ track, isOpen, onClose, onShare }: PlayerPanelProp
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
             transition={{ duration: 0.3 }}
-            className="relative z-50 mb-10 w-[min(100%,700px)] rounded-3xl border border-white/10 bg-slate-900/80 p-6 text-white shadow-2xl backdrop-blur"
+            className="gpu-layer relative z-50 mb-10 w-[min(100%,700px)] rounded-3xl border border-white/10 bg-slate-900/80 p-6 text-white shadow-2xl backdrop-blur"
             role="dialog"
             aria-modal="true"
             aria-labelledby="player-title"

@@ -6,11 +6,33 @@
   color-scheme: dark;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
+  background-color: #0b1220;
+}
+
+html {
+  background-color: #0b1220;
+  overscroll-behavior: none;
 }
 
 body {
   font-family: var(--font-body);
+  overscroll-behavior: none;
   @apply bg-midnight text-starlight antialiased font-body;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  background-color: #050a1f;
+  isolation: isolate;
+}
+
+.gpu-layer {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform, opacity;
 }
 
 ::-webkit-scrollbar {

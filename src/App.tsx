@@ -40,7 +40,7 @@ export default function App() {
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
   const [currentRoute, setCurrentRoute] = useState<Route>({ type: 'home' });
   const toastTimeout = useRef<number | null>(null);
-  const lastNonTrackRoute = useRef<Route>({ type: 'home' });
+  const lastStableRoute = useRef<Route>({ type: 'home' });
   const quotesSectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -75,9 +75,10 @@ export default function App() {
   }, []);
 
   const rememberRoute = useCallback((route: Route) => {
-    if (route.type !== 'track') {
-      lastNonTrackRoute.current = route;
+    if (route.type === 'track' || route.type === 'movie') {
+      return;
     }
+    lastStableRoute.current = route;
   }, []);
 
   const applyRoute = useCallback(
@@ -158,7 +159,7 @@ export default function App() {
   );
 
   const closePanel = useCallback(() => {
-    const fallbackRoute = lastNonTrackRoute.current ?? { type: 'home' };
+    const fallbackRoute = lastStableRoute.current ?? { type: 'home' };
     applyRoute(fallbackRoute, { pushState: true });
   }, [applyRoute]);
 
@@ -170,7 +171,7 @@ export default function App() {
   );
 
   const closeMoviePanel = useCallback(() => {
-    const route = lastNonTrackRoute.current ?? { type: 'home' };
+    const route = lastStableRoute.current ?? { type: 'home' };
     applyRoute(route, { pushState: true });
   }, [applyRoute]);
 
@@ -223,13 +224,17 @@ export default function App() {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isPanelOpen) {
+      if (event.key !== 'Escape') return;
+
+      if (isPanelOpen) {
         closePanel();
+      } else if (isMoviePanelOpen) {
+        closeMoviePanel();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [closePanel, isPanelOpen]);
+  }, [closeMoviePanel, closePanel, isMoviePanelOpen, isPanelOpen]);
 
   const scrollQuotesIntoView = useCallback(() => {
     const section = quotesSectionRef.current;
@@ -308,7 +313,7 @@ export default function App() {
   const isAbout = currentRoute.type === 'about';
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-midnight">
+    <div className="relative min-h-screen overflow-hidden bg-midnight isolate">
       <GalaxyBackground animationsEnabled={animationsEnabled} />
       <div className="relative z-10">
         <div className="flex justify-end px-4 pt-6 sm:px-8 lg:px-10">
