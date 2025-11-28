@@ -113,11 +113,11 @@ export function StaggeredMenu({
               onClick={() => setOpen(false)}
             />
 
+            {/* Keep the surface dark to avoid white flashes against the midnight home canvas. */}
             <motion.aside
               id="tfios-menu-panel"
               role="dialog"
               aria-modal="true"
-              {/* Keep the surface dark to avoid white flashes against the midnight home canvas. */}
               className="absolute inset-y-0 right-0 flex h-full w-full max-w-[420px] flex-col overflow-hidden rounded-l-[3rem] border-l border-white/10 bg-gradient-to-b from-slate-900/95 via-slate-900/90 to-slate-900/85 text-white/80 shadow-[0_0_80px_rgba(10,14,26,0.35)]"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
@@ -159,8 +159,8 @@ export function StaggeredMenu({
                           staggerDirection: -1,
                         },
                       },
-                  }}
-                >
+                    }}
+                  >
                   {menuItems.map((item) => (
                     <motion.li
                       key={item.label}
