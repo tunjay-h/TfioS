@@ -2,13 +2,15 @@ export const ROUTE_SEGMENTS = {
   track: 'stars',
   movie: 'movies',
   quote: 'words',
+  about: 'about',
 } as const;
 
 export type Route =
   | { type: 'home' }
   | { type: 'track'; id: string }
   | { type: 'movie'; id: string }
-  | { type: 'quote'; id: string };
+  | { type: 'quote'; id: string }
+  | { type: 'about' };
 
 function normalizePath(pathname: string) {
   return pathname.replace(/\/+/g, '/').replace(/\/?$/, '') || '/';
@@ -21,6 +23,9 @@ export function parseRouteFromLocation(): Route {
   const path = normalizePath(window.location.pathname);
   if (path === '/') {
     return { type: 'home' };
+  }
+  if (path === '/about') {
+    return { type: 'about' };
   }
   const segments = path.split('/').filter(Boolean);
   const [segment, id] = segments;
@@ -46,6 +51,8 @@ export function buildPath(route: Route) {
       return `/${ROUTE_SEGMENTS.movie}/${route.id}`;
     case 'quote':
       return `/${ROUTE_SEGMENTS.quote}/${route.id}`;
+    case 'about':
+      return '/about';
     default:
       return '/';
   }
