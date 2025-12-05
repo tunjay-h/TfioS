@@ -30,6 +30,24 @@
       "openUrl": "https://www.youtube.com/results?search_query=finding+the+rose+the+little+prince"
     },
     {
+      "id": "ed-sheeran-all-of-the-stars",
+      "title": "All of the Stars",
+      "artist": "Ed Sheeran",
+      "year": 2014,
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273f17ddc825889b0dd22798b9b",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/nkqVm5aiC28?si=ObYjmg82luA_osxI",
+      "openUrl": "https://www.youtube.com/results?search_query=ed+sheeran+all+of+the+stars"
+    },
+    {
+      "id": "3-idiots-give-me-some-sunshine",
+      "title": "Give Me Some Sunshine",
+      "artist": "Suraj Jagan / Sharman Joshi",
+      "year": 2009,
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273593dd16691c117c716e210ae",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/lbCRtrrMvSw?si=Z9YhEk3dhL6ks7AQ",
+      "openUrl": "https://www.youtube.com/results?search_query=give+me+some+sunshine+3+idiots"
+    },
+    {
       "id": "kodaline-all-i-want",
       "title": "All I Want",
       "artist": "Kodaline",
