@@ -73,7 +73,7 @@ export function StaggeredMenu({
         aria-controls="tfios-menu-panel"
         aria-label={open ? 'Close menu' : 'Open menu'}
         onClick={() => setOpen((prev) => !prev)}
-        className="group inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-black/40 p-0 text-white/90 backdrop-blur focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        className="group inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-black/40 p-0 text-white/90 backdrop-blur focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
       >
         <span className="relative flex h-5 w-6 items-center justify-center" aria-hidden>
           <span
@@ -113,11 +113,12 @@ export function StaggeredMenu({
               onClick={() => setOpen(false)}
             />
 
+            {/* Keep the surface dark to avoid white flashes against the midnight home canvas. */}
             <motion.aside
               id="tfios-menu-panel"
               role="dialog"
               aria-modal="true"
-              className="absolute inset-y-0 right-0 flex h-full w-full max-w-[420px] flex-col overflow-hidden rounded-l-[3rem] border-l border-white/20 bg-gradient-to-b from-white/95 via-white/90 to-white/85 text-midnight shadow-[0_0_80px_rgba(10,14,26,0.35)]"
+              className="absolute inset-y-0 right-0 flex h-full w-full max-w-[420px] flex-col overflow-hidden rounded-l-[3rem] border-l border-white/10 bg-gradient-to-b from-slate-900/95 via-slate-900/90 to-slate-900/85 text-white/80 shadow-[0_0_80px_rgba(10,14,26,0.35)]"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -125,12 +126,12 @@ export function StaggeredMenu({
             >
               <div className="flex h-full flex-col overflow-hidden">
                 <div className="flex items-center justify-between px-12 pb-6 pt-12">
-                  <p className="text-xl font-semibold text-midnight">Beyond the tracks</p>
+                  <p className="text-xl font-semibold text-white">Beyond the tracks</p>
                   <button
                     type="button"
                     onClick={() => setOpen(false)}
                     aria-label="Close menu"
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-midnight/70 transition hover:text-midnight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/70 transition hover:text-white focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
                   >
                     <span className="relative block h-4 w-4">
                       <span className="absolute inset-x-0 top-1/2 block h-[2px] -translate-y-1/2 rotate-45 bg-current" />
@@ -158,12 +159,12 @@ export function StaggeredMenu({
                           staggerDirection: -1,
                         },
                       },
-                  }}
-                >
+                    }}
+                  >
                   {menuItems.map((item) => (
                     <motion.li
                       key={item.label}
-                      className="border-b border-black/5 pb-6"
+                      className="border-b border-white/10 pb-6"
                       variants={{
                         open: {
                           opacity: 1,
@@ -187,7 +188,7 @@ export function StaggeredMenu({
                         href={item.href}
                         target={item.external ? '_blank' : undefined}
                         rel={item.external ? 'noreferrer noopener' : undefined}
-                        className="group flex items-center justify-between gap-6 text-[clamp(2rem,5vw,3.5rem)] font-semibold uppercase tracking-tight text-midnight/80 transition hover:text-midnight"
+                        className="group flex items-center justify-between gap-6 text-[clamp(2rem,5vw,3.5rem)] font-semibold uppercase tracking-tight text-white/80 transition hover:text-white focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
                         onClick={(event) => {
                           if (!item.external) {
                             if (item.label === 'Home' && onHome) {
@@ -207,20 +208,20 @@ export function StaggeredMenu({
                   ))}
                 </motion.ul>
                 </nav>
-                <div className="px-12 pb-10 pt-4 text-sm text-midnight/70">
-                  <div className="flex items-center justify-between gap-4 border-t border-black/10 py-4">
+                <div className="px-12 pb-10 pt-4 text-sm text-white/70">
+                  <div className="flex items-center justify-between gap-4 border-t border-white/10 py-4">
                     <span className="text-xs font-semibold uppercase tracking-[0.4em]">Animations</span>
                     <button
                       type="button"
                       onClick={() => {
                         onToggleAnimations();
                       }}
-                      className="rounded-full border border-black/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-midnight/80 transition hover:text-midnight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                      className="rounded-full border border-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-white/80 transition hover:text-white focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
                     >
                       {animationsEnabled ? 'On' : 'Off'}
                     </button>
                   </div>
-                  <p className="text-[0.65rem] uppercase tracking-[0.4em] text-neutral-500/80">
+                  <p className="text-[0.65rem] uppercase tracking-[0.4em] text-white/50">
                     hello@tfios.app · crafted amongst the stars
                   </p>
                 </div>

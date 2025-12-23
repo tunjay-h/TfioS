@@ -96,7 +96,7 @@ export function AboutPage({ animationsEnabled }: AboutPageProps) {
               <div className="space-y-1">
                 <a
                   href="mailto:hello@tfios.app"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-base font-semibold text-white/90 shadow-inner transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-base font-semibold text-white/90 shadow-inner transition hover:bg-white/10 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
                 >
                   hello@tfios.app
                 </a>
@@ -134,7 +134,7 @@ export function AboutPage({ animationsEnabled }: AboutPageProps) {
                   <button
                     type="button"
                     onClick={() => setLightboxImage(photoStack[0])}
-                    className={`${polaroidClass} ${transitionDuration} relative block overflow-hidden border-white/15 bg-gradient-to-b from-white/5 via-white/5 to-black/40 p-4 text-left shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:-rotate-2`}
+                    className={`${polaroidClass} ${transitionDuration} relative block overflow-hidden border-white/15 bg-gradient-to-b from-white/5 via-white/5 to-black/40 p-4 text-left shadow-lg focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70 md:-rotate-2`}
                   >
                     <div className="aspect-[4/3] overflow-hidden rounded-xl bg-black/30">
                       <img
@@ -149,7 +149,7 @@ export function AboutPage({ animationsEnabled }: AboutPageProps) {
                   <button
                     type="button"
                     onClick={() => setLightboxImage(photoStack[1])}
-                    className={`${polaroidClass} ${transitionDuration} relative block overflow-hidden border-white/15 bg-gradient-to-b from-white/5 via-white/5 to-black/40 p-4 text-left shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:rotate-1`}
+                    className={`${polaroidClass} ${transitionDuration} relative block overflow-hidden border-white/15 bg-gradient-to-b from-white/5 via-white/5 to-black/40 p-4 text-left shadow-lg focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70 md:rotate-1`}
                   >
                     <div className="aspect-[4/3] overflow-hidden rounded-xl bg-black/30">
                       <img
@@ -190,17 +190,17 @@ export function AboutPage({ animationsEnabled }: AboutPageProps) {
           onClick={() => setLightboxImage(null)}
         >
           <div
-            className={`relative w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-black/60 shadow-2xl ${transitionDuration}`}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              aria-label="Close image"
-              onClick={() => setLightboxImage(null)}
-              className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className={`relative w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-black/60 shadow-2xl ${transitionDuration}`}
+              onClick={(event) => event.stopPropagation()}
             >
-              ×
-            </button>
+              <button
+                type="button"
+                aria-label="Close image"
+                onClick={() => setLightboxImage(null)}
+                className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition hover:bg-white/20 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora/70"
+              >
+                ×
+              </button>
             <div className="max-h-[80vh] overflow-hidden">
               <img src={lightboxImage.src} alt={lightboxImage.alt} className="h-full w-full object-contain" />
             </div>
